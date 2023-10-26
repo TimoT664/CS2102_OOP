@@ -1,9 +1,6 @@
 import org.junit.Test;
-
 import java.util.LinkedList;
-
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class Examples {
 
@@ -46,7 +43,43 @@ public class Examples {
         pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
         pr.bestowHonor("Biggy","Biggy");
 
-        assertEquals("Biggy Big Dog Biggy is expected", "Biggy Big Dog Biggy", pr.petOfTheMonth);
+        assertEquals("Biggy Big Dog Biggy is expected", "Biggy Big Dog, Biggy", pr.petOfTheMonth);
+    }
+
+    @Test
+    public void testBestowHonorAllEmpty(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
+        pr.bestowHonor("","");
+
+        assertEquals("Big Dog is expected", "Big Dog", pr.petOfTheMonth);
+    }
+
+    @Test
+    public void testBestowHonorCredEmpty(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
+        pr.bestowHonor("Biggy","");
+
+        assertEquals("Biggy Big Dog is expected", "Biggy Big Dog", pr.petOfTheMonth);
+    }
+
+    @Test
+    public void testBestowHonorTitleEmpty(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
+        pr.bestowHonor("","Biggy");
+
+        assertEquals("Big Dog,Biggy is expected", "Big Dog, Biggy", pr.petOfTheMonth);
     }
 
     @Test
@@ -55,15 +88,47 @@ public class Examples {
         LinkedList<Integer> dogYears = new LinkedList<Integer>();
         LinkedList<Coord> catCoords = new LinkedList<Coord>();
 
-       /* catCoords.add(new Coord("A", 1, 1));
+   /*    catCoords.add(new Coord("A", 1, 1));
        catCoords.add(new Coord("B", 4, 4));
         catCoords.add(new Coord("C", 8, 8));
-        catCoords.add(new Coord("D", 12, 12)); */
-
+        catCoords.add(new Coord("D", 12, 12));
+*/
         pr = new PetRescue(birdWeights, dogYears, "", catCoords);
 
         assertEquals("Conspiciously Catless", "Conspiciously Catless", pr.closestTo(3, 3));
     }
+
+    @Test
+    public void testClosestToOneLetter(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+       catCoords.add(new Coord("A", 1, 1));
+       catCoords.add(new Coord("B", 4, 4));
+        catCoords.add(new Coord("C", 8, 8));
+        catCoords.add(new Coord("D", 12, 12));
+
+        pr = new PetRescue(birdWeights, dogYears, "", catCoords);
+
+        assertEquals("B is expexcted", "B", pr.closestTo(3, 3));
+    }
+
+  /*  @Test
+    public void testClosestToRightInTheMiddle(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        catCoords.add(new Coord("A", 1, 1));
+        catCoords.add(new Coord("B", 4, 4));
+        catCoords.add(new Coord("C", 6, 6));
+        catCoords.add(new Coord("D", 12, 12));
+
+        pr = new PetRescue(birdWeights, dogYears, "", catCoords);
+
+        assertEquals("Between 2 ", "B", pr.closestTo(5, 5));
+    }*/
 
     @Test
     public void testFeedChinchilla(){
@@ -72,10 +137,31 @@ public class Examples {
         LinkedList<Coord> catCoords = new LinkedList<Coord>();
 
         pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
-        pr.pantryPelletes = 3;
-        pr.pantryHay = 2;
+       // pr.pellets = 3;
+       // pr.hay = 2;
 
-        assertEquals("'Chinchilla: unknown pellets, unknown hay' is expected", "Chinchilla: unknown pellets, unknown hay", pr.feedChinchillas(4, 3));
+        assertEquals("'Chinchilla: unknown pellets, unknown hay' is expected", "Chinchilla: 4 pellets, 3 hay", pr.feedChinchillas(4, 3));
     }
 
+    @Test
+    public void testNegativeFeedChinchilla(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
+
+        assertEquals("'Chinchilla: unknown pellets, unknown hay' is expected", "Chinchilla: unknown pellets, unknown hay", pr.feedChinchillas(-4, -3));
+    }
+/*
+    @Test
+    public void testZeroFeedChinchilla(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
+
+        assertEquals("'Chinchilla: unknown pellets, unknown hay' is expected", "Chinchilla: unknown pellets, unknown hay", pr.feedChinchillas(0, 0));
+    }*/
 }

@@ -7,8 +7,8 @@ public class PetRescue extends Coord implements PetRescueable{
     public LinkedList<Integer> birdWeights;
     public LinkedList<Integer> dogYears;
     public LinkedList<Coord> catCoords;
-    public int pantryPelletes;
-    public int pantryHay;
+    public int pellets = 0;
+    public int hay = 0;
 
     public PetRescue(LinkedList<Integer> birdWeights,
                      LinkedList<Integer> dogYears,
@@ -40,26 +40,27 @@ public class PetRescue extends Coord implements PetRescueable{
 
     @Override
     public void bestowHonor(String title, String credential) {
-        title = title == null ? "" : title + " ";
-        credential = credential == null ? "" : " " + credential;
+        //TODO Check empty string to prevent blanks
+        title = title == null  ? "" : title + " ";
+        credential = credential == null ? "" : ", " + credential;
 
         this.petOfTheMonth =  title + this.petOfTheMonth + credential;
     }
 
     @Override
     public String feedChinchillas(int pellets, int hay) {
-        this.pantryPelletes = this.pantryPelletes - pellets;
-        this.pantryHay = this.pantryHay - hay;
+        this.pellets = this.pellets + pellets;
+        this.hay = this.hay + hay;
 
-        String amountHay = this.pantryHay + "";
-        String amountPellets = this.pantryPelletes + "";
+        String amountHay = this.hay + "";
+        String amountPellets = this.pellets + "";
 
-        if(this.pantryHay < 0){
-            this.pantryHay = 0;
+        if(this.hay < 0){
+            this.hay = 0;
             amountHay = "unknown";
         }
-        if(this.pantryPelletes < 0){
-            this.pantryPelletes = 0;
+        if(this.pellets < 0){
+            this.pellets = 0;
             amountPellets = "unknown";
         }
 
