@@ -203,4 +203,36 @@ public class Examples {
 
         assertEquals("'Chinchilla: unknown pellets, unknown hay' is expected", "Chinchilla: 0 pellets, 0 hay", pr.feedChinchillas(0, 0));
     }
+
+    @Test
+    public void testHelperMethod(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
+
+        Coord from = new Coord("from", 3, 4);
+        Coord to = new Coord("to", 7, 1);
+
+        double distance = pr.distanceBetweenCoords(from, to);
+        assertEquals(5, distance, 0.01);
+    }
+
+    @Test
+    public void testHelperMethodWithNullCoords(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
+
+        Coord from = null;
+        Coord to = null;
+
+        assertThrows(NullPointerException.class,
+            ()->{
+                double distance = pr.distanceBetweenCoords(from, to);
+            });
+    }
 }

@@ -1,15 +1,37 @@
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Represents a Pet Rescue center that manages various pets and their related operations.
+ */
 public class PetRescue extends Coord implements PetRescueable{
 
+    /** The name of the pet of the month. */
     public String petOfTheMonth;
+
+    /** A list of weights of birds in the rescue. */
     public LinkedList<Integer> birdWeights;
+
+    /** A list of dog ages in dog years. */
     public LinkedList<Integer> dogYears;
+
+    /** A list of coordinates where cats are located. */
     public LinkedList<Coord> catCoords;
+
+    /** The number of pellets available for chinchillas. */
     public int pellets = 0;
+
+    /** The amount of hay available for chinchillas. */
     public int hay = 0;
 
+    /**
+     * Constructs a new PetRescue with the given parameters.
+     *
+     * @param birdWeights A list of weights of birds.
+     * @param dogYears A list of dog ages in dog years.
+     * @param petOfTheMonth The name of the pet of the month.
+     * @param catCoords A list of coordinates where cats are located.
+     */
     public PetRescue(LinkedList<Integer> birdWeights,
                      LinkedList<Integer> dogYears,
                      String petOfTheMonth,
@@ -24,6 +46,10 @@ public class PetRescue extends Coord implements PetRescueable{
     public int closestTo(Coord c){
         return 0;
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int biggestBird() {
         if (this.birdWeights.isEmpty()) {
@@ -32,6 +58,9 @@ public class PetRescue extends Coord implements PetRescueable{
         return Collections.max(this.birdWeights);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LinkedList<Integer> inHumanYears() {
         LinkedList<Integer> inHumanYears = new LinkedList<Integer>();
@@ -40,6 +69,9 @@ public class PetRescue extends Coord implements PetRescueable{
         return inHumanYears;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void bestowHonor(String title, String credential) {
         String prefix = "";
@@ -63,8 +95,9 @@ public class PetRescue extends Coord implements PetRescueable{
         this.petOfTheMonth = prefix + this.petOfTheMonth + suffix;
     }
 
-
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String feedChinchillas(int pellets, int hay) {
         this.pellets = this.pellets + pellets;
@@ -84,34 +117,17 @@ public class PetRescue extends Coord implements PetRescueable{
 
         return "Chinchilla: " + amountPellets + " pellets, " + amountHay + " hay";
     }
-/*
-    @Override
-    public String closestTo(int x, int y) {
-        Coord closestCoord = new Coord("Conspiciously Catless", -111,-111);
 
-        for(Coord currentCoord : this.catCoords){
-
-            // https://www.baeldung.com/java-distance-between-two-points
-            double closestCoordDist = Math.sqrt((closestCoord.y - y) * (closestCoord.y - y) + (closestCoord.x - x) * (closestCoord.x - x));
-            double currentCoordDist = Math.sqrt((currentCoord.y - y) * (currentCoord.y - y) + (currentCoord.x - x) * (currentCoord.x - x));
-
-            if(closestCoordDist > currentCoordDist){
-                closestCoord = currentCoord;
-            }
-        }
-        return closestCoord.name;
-    }*/
-
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String closestTo(int x, int y) {
         Coord targetCoord = new Coord("Conspiciously Catless", -111,-111);
 
         for(Coord currentCoord : this.catCoords){
-
-            // https://www.baeldung.com/java-distance-between-two-points
-            double closestCoordDist = /* distanceBetweenCoords(targetCoord, new Coord("", x,y));*/Math.sqrt((targetCoord.y - y) * (targetCoord.y - y) + (targetCoord.x - x) * (targetCoord.x - x));
-            double currentCoordDist = /*distanceBetweenCoords(currentCoord, new Coord("", x,y));*/Math.sqrt((currentCoord.y - y) * (currentCoord.y - y) + (currentCoord.x - x) * (currentCoord.x - x));
+            double closestCoordDist = distanceBetweenCoords(targetCoord, new Coord("", x,y));
+            double currentCoordDist = distanceBetweenCoords(currentCoord, new Coord("", x,y));
 
             if(closestCoordDist > currentCoordDist){
                 targetCoord = currentCoord;
@@ -120,9 +136,14 @@ public class PetRescue extends Coord implements PetRescueable{
         return targetCoord.name;
     }
 
-    //helper method small change
-    private double distanceBetweenCoords(Coord from, Coord to) {
-
+    /**
+     * Calculates the distance between two coordinates.
+     *
+     * @param from The starting coordinate.
+     * @param to The ending coordinate.
+     * @return The distance between the two coordinates.
+     */
+    public double distanceBetweenCoords(Coord from, Coord to) {
         return Math.sqrt((from.y - to.y) * (from.y - to.y) + (from.x - to.x) * (from.x - to.x));
     }
 }
