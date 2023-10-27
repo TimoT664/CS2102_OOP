@@ -87,24 +87,23 @@ public class PetRescue extends Coord implements PetRescueable{
 
     @Override
     public String closestTo(int x, int y) {
-        Coord closestCoord = new Coord("Conspiciously Catless", -111,-111);
+        Coord targetCoord = new Coord("target", -111,-111);
 
         for(Coord currentCoord : this.catCoords){
 
             // https://www.baeldung.com/java-distance-between-two-points
-            //TODO use helper method distanceBetweenCoords
-            double closestCoordDist = Math.sqrt((closestCoord.y - y) * (closestCoord.y - y) + (closestCoord.x - x) * (closestCoord.x - x));
-            double currentCoordDist = Math.sqrt((currentCoord.y - y) * (currentCoord.y - y) + (currentCoord.x - x) * (currentCoord.x - x));
+            double closestCoordDist = distanceBetweenCoords(targetCoord, new Coord("", x,y));//Math.sqrt((closestCoord.y - y) * (closestCoord.y - y) + (closestCoord.x - x) * (closestCoord.x - x));
+            double currentCoordDist = distanceBetweenCoords(currentCoord, new Coord("", x,y));//Math.sqrt((currentCoord.y - y) * (currentCoord.y - y) + (currentCoord.x - x) * (currentCoord.x - x));
 
             if(closestCoordDist > currentCoordDist){
-                closestCoord = currentCoord;
+                targetCoord = currentCoord;
             }
         }
-        return closestCoord.name;
+        return targetCoord.name;
     }
 
-    //TODO helper method
-    //private double distanceBetweenCoords(){
-
-    //}
+    //helper method
+    private double distanceBetweenCoords(Coord from, Coord to) {
+        return Math.sqrt((from.y - to.y) * (from.y - to.y) + (from.x - to.x) * (from.x - to.x));
+    }
 }
