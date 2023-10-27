@@ -102,7 +102,7 @@ public class PetRescue extends Coord implements PetRescueable{
         return targetCoord.name;
     }
 
-    //helper method
+    //helper method small change
     private double distanceBetweenCoords(Coord from, Coord to) {
         return Math.sqrt((from.y - to.y) * (from.y - to.y) + (from.x - to.x) * (from.x - to.x));
     }
