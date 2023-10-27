@@ -81,6 +81,33 @@ public class Examples {
 
         assertEquals("Big Dog,Biggy is expected", "Big Dog, Biggy", pr.petOfTheMonth);
     }
+
+    @Test
+    public void testBestowHonorWithEmptyNameNaughty() {
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "", catCoords);
+        pr.bestowHonor("Mr.", "most naughty");
+
+        assertEquals("Expected the name to be modified to 'Mr. most naughty'", "Mr. , most naughty", pr.petOfTheMonth);
+    }
+
+    @Test
+    public void testBestowHonorTwice() {
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "Sam", catCoords);
+        pr.bestowHonor("Dr.","handsome");
+        pr.bestowHonor("","elegant");
+
+        assertEquals("Expected the name to be modified to 'Dr. Sam, handsome elegant'", "Dr. Sam, handsome elegant", pr.petOfTheMonth);
+    }
+
+
 /*
     @Test
     public void testBestowHonorNull(){
@@ -165,7 +192,7 @@ public class Examples {
 
         assertEquals("'Chinchilla: unknown pellets, unknown hay' is expected", "Chinchilla: unknown pellets, unknown hay", pr.feedChinchillas(-4, -3));
     }
-/*
+
     @Test
     public void testZeroFeedChinchilla(){
         LinkedList<Integer> birdWeights = new LinkedList<Integer>();
@@ -174,6 +201,6 @@ public class Examples {
 
         pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
 
-        assertEquals("'Chinchilla: unknown pellets, unknown hay' is expected", "Chinchilla: unknown pellets, unknown hay", pr.feedChinchillas(0, 0));
-    }*/
+        assertEquals("'Chinchilla: unknown pellets, unknown hay' is expected", "Chinchilla: 0 pellets, 0 hay", pr.feedChinchillas(0, 0));
+    }
 }

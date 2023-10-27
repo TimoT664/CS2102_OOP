@@ -21,9 +21,9 @@ public class PetRescue extends Coord implements PetRescueable{
         this.catCoords = catCoords;
     }
 
-    //public int closestTo(Coord c){
-    //    return 0;
-    //}
+    public int closestTo(Coord c){
+        return 0;
+    }
     @Override
     public int biggestBird() {
         if (this.birdWeights.isEmpty()) {
@@ -84,16 +84,34 @@ public class PetRescue extends Coord implements PetRescueable{
 
         return "Chinchilla: " + amountPellets + " pellets, " + amountHay + " hay";
     }
-
+/*
     @Override
     public String closestTo(int x, int y) {
-        Coord targetCoord = new Coord("target", -111,-111);
+        Coord closestCoord = new Coord("Conspiciously Catless", -111,-111);
 
         for(Coord currentCoord : this.catCoords){
 
             // https://www.baeldung.com/java-distance-between-two-points
-            double closestCoordDist = distanceBetweenCoords(targetCoord, new Coord("", x,y));//Math.sqrt((closestCoord.y - y) * (closestCoord.y - y) + (closestCoord.x - x) * (closestCoord.x - x));
-            double currentCoordDist = distanceBetweenCoords(currentCoord, new Coord("", x,y));//Math.sqrt((currentCoord.y - y) * (currentCoord.y - y) + (currentCoord.x - x) * (currentCoord.x - x));
+            double closestCoordDist = Math.sqrt((closestCoord.y - y) * (closestCoord.y - y) + (closestCoord.x - x) * (closestCoord.x - x));
+            double currentCoordDist = Math.sqrt((currentCoord.y - y) * (currentCoord.y - y) + (currentCoord.x - x) * (currentCoord.x - x));
+
+            if(closestCoordDist > currentCoordDist){
+                closestCoord = currentCoord;
+            }
+        }
+        return closestCoord.name;
+    }*/
+
+
+    @Override
+    public String closestTo(int x, int y) {
+        Coord targetCoord = new Coord("Conspiciously Catless", -111,-111);
+
+        for(Coord currentCoord : this.catCoords){
+
+            // https://www.baeldung.com/java-distance-between-two-points
+            double closestCoordDist = /* distanceBetweenCoords(targetCoord, new Coord("", x,y));*/Math.sqrt((targetCoord.y - y) * (targetCoord.y - y) + (targetCoord.x - x) * (targetCoord.x - x));
+            double currentCoordDist = /*distanceBetweenCoords(currentCoord, new Coord("", x,y));*/Math.sqrt((currentCoord.y - y) * (currentCoord.y - y) + (currentCoord.x - x) * (currentCoord.x - x));
 
             if(closestCoordDist > currentCoordDist){
                 targetCoord = currentCoord;
@@ -104,6 +122,7 @@ public class PetRescue extends Coord implements PetRescueable{
 
     //helper method small change
     private double distanceBetweenCoords(Coord from, Coord to) {
+
         return Math.sqrt((from.y - to.y) * (from.y - to.y) + (from.x - to.x) * (from.x - to.x));
     }
 }
