@@ -21,12 +21,14 @@ public class PetRescue extends Coord implements PetRescueable{
         this.catCoords = catCoords;
     }
 
-    public int closestTo(Coord c){
-        return 0;
-    }
-
+    //public int closestTo(Coord c){
+    //    return 0;
+    //}
     @Override
     public int biggestBird() {
+        if (this.birdWeights.isEmpty()) {
+            return 0;  // Return 0 for an empty list
+        }
         return Collections.max(this.birdWeights);
     }
 
@@ -40,12 +42,28 @@ public class PetRescue extends Coord implements PetRescueable{
 
     @Override
     public void bestowHonor(String title, String credential) {
-        //TODO Check empty string to prevent blanks
-        title = title == null  ? "" : title + " ";
-        credential = credential == null ? "" : ", " + credential;
+        String prefix = "";
+        String suffix = "";
 
-        this.petOfTheMonth =  title + this.petOfTheMonth + credential;
+        // Check for null or empty string for title
+        if (! (title.equals("")) ) {
+            prefix = title + " ";
+        }
+
+        // Check for null or empty string for credential
+        if (! (credential.equals(""))) {
+            // Check if petOfTheMonth already ends with a comma
+            if (this.petOfTheMonth.contains(", ")) {
+                suffix = " " + credential;
+            } else {
+                suffix = ", " + credential;
+            }
+        }
+
+        this.petOfTheMonth = prefix + this.petOfTheMonth + suffix;
     }
+
+
 
     @Override
     public String feedChinchillas(int pellets, int hay) {
@@ -74,6 +92,7 @@ public class PetRescue extends Coord implements PetRescueable{
         for(Coord currentCoord : this.catCoords){
 
             // https://www.baeldung.com/java-distance-between-two-points
+            //TODO use helper method distanceBetweenCoords
             double closestCoordDist = Math.sqrt((closestCoord.y - y) * (closestCoord.y - y) + (closestCoord.x - x) * (closestCoord.x - x));
             double currentCoordDist = Math.sqrt((currentCoord.y - y) * (currentCoord.y - y) + (currentCoord.x - x) * (currentCoord.x - x));
 
@@ -84,6 +103,7 @@ public class PetRescue extends Coord implements PetRescueable{
         return closestCoord.name;
     }
 
+    //TODO helper method
     //private double distanceBetweenCoords(){
 
     //}

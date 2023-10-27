@@ -81,6 +81,18 @@ public class Examples {
 
         assertEquals("Big Dog,Biggy is expected", "Big Dog, Biggy", pr.petOfTheMonth);
     }
+/*
+    @Test
+    public void testBestowHonorNull(){
+        LinkedList<Integer> birdWeights = new LinkedList<Integer>();
+        LinkedList<Integer> dogYears = new LinkedList<Integer>();
+        LinkedList<Coord> catCoords = new LinkedList<Coord>();
+
+        pr = new PetRescue(birdWeights, dogYears, "Big Dog", catCoords);
+        pr.bestowHonor(null,null);
+
+        assertEquals("Big Dog is expected", "Big Dog", pr.petOfTheMonth);
+    }*/
 
     @Test
     public void testClosestTo(){
