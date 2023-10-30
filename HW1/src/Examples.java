@@ -36,6 +36,7 @@ public class Examples {
 
     @Test
     public void testBestowHonor(){
+        // test
         LinkedList<Integer> birdWeights = new LinkedList<Integer>();
         LinkedList<Integer> dogYears = new LinkedList<Integer>();
         LinkedList<Coord> catCoords = new LinkedList<Coord>();
