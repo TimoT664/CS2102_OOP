@@ -1,6 +1,15 @@
 package animals;
 
+import coord.Coord2D;
+
 public class Bird implements Petable{
+
+    public Bird(){
+
+    }
+
+    public Bird(String blue, int i, int i1, Coord2D coord2D, boolean b) {
+    }
 
     @Override
     public String getName() {

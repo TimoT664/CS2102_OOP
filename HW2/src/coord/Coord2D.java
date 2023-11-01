@@ -1,3 +1,5 @@
+package coord;
+
 /**
  * A 2D coord
  */
