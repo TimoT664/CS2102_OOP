@@ -1,55 +1,30 @@
 package zone;
 
 import animals.Bird;
-import animals.Petable;
+import zone.AbstractZone;
 
 import java.util.LinkedList;
 
-public class BirdZone implements Zoneable{
+/**
+ * Represents a zone specifically for birds.
+ */
+public class BirdZone extends AbstractZone {
 
-    public LinkedList<Bird> birds;
-
-    public BirdZone(LinkedList<Bird> birds){
-
+    /**
+     * Constructor for the BirdZone.
+     * @param birds The list of birds in the zone.
+     */
+    public BirdZone(LinkedList<Bird> birds) {
+        super(birds, "seeds", 0);
     }
 
     @Override
-    public int petsInZone() {
-        return 0;
+    protected int humanYearMultiplier() {
+        return 9;
     }
 
     @Override
-    public Petable heaviestPet() {
-        return null;
-    }
-
-    @Override
-    public int inHumanYears(String petName) {
-        return 0;
-    }
-
-    @Override
-    public Zoneable restockPetFood(String foodName, int foodAmt) {
-        return null;
-    }
-
-    @Override
-    public Zoneable feedZone() {
-        return null;
-    }
-
-    @Override
-    public Petable getPet(String petName) {
-        return null;
-    }
-
-    @Override
-    public String getPantryLabel() {
-        return null;
-    }
-
-    @Override
-    public String closestPet(int x, int y) {
-        return null;
+    protected String zoneLabel() {
+        return "Bird";
     }
 }

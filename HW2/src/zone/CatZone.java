@@ -1,49 +1,48 @@
 package zone;
 
-import animals.Petable;
+import animals.Cat;
+import zone.AbstractZone;
+import zone.Zoneable;
 
-public class CatZone implements Zoneable{
+import java.util.LinkedList;
 
-    public CatZone(){
+/**
+ * Represents a zone specifically for cats.
+ */
+public class CatZone extends AbstractZone {
 
+    private int treatsAmount;
+
+    /**
+     * Constructor for the CatZone.
+     * @param cats The list of cats in the zone.
+     */
+    public CatZone(LinkedList<Cat> cats) {
+        super(cats, "cans", 0);
+        this.treatsAmount = 0;
     }
+
     @Override
-    public int petsInZone() {
-        return 0;
+    protected int humanYearMultiplier() {
+        return 6;
     }
 
     @Override
-    public Petable heaviestPet() {
-        return null;
-    }
-
-    @Override
-    public int inHumanYears(String petName) {
-        return 0;
+    protected String zoneLabel() {
+        return "Cat";
     }
 
     @Override
     public Zoneable restockPetFood(String foodName, int foodAmt) {
-        return null;
-    }
-
-    @Override
-    public Zoneable feedZone() {
-        return null;
-    }
-
-    @Override
-    public Petable getPet(String petName) {
-        return null;
+        super.restockPetFood(foodName, foodAmt);
+        if ("treats".equals(foodName)) {
+            this.treatsAmount += foodAmt;
+        }
+        return this;
     }
 
     @Override
     public String getPantryLabel() {
-        return null;
-    }
-
-    @Override
-    public String closestPet(int x, int y) {
-        return null;
+        return String.format("%s: %d %s, %d treats", zoneLabel(), foodAmount, foodType, treatsAmount);
     }
 }
