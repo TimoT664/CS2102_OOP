@@ -1,36 +1,38 @@
 package animals;
 
+import animals.AbstractPet;
 import coord.Coord2D;
 
-public class Chinchilla implements Petable{
+public class Chinchilla extends AbstractPet {
+    private int dustBathResidueInOz;
 
-    public Coord2D coord2D;
-
-    public Chinchilla(){
-
-    }
-
-    public Chinchilla(String dusty, int i, int i1, Coord2D coord2D, int i2) {
-
-    }
-
-    @Override
-    public String getName() {
-        return null;
+    public Chinchilla(String name, int age, int weightInOz, Coord2D location, int dustBathResidueInOz) {
+        super(name, age, weightInOz, location);
+        this.dustBathResidueInOz = dustBathResidueInOz;
     }
 
     @Override
     public int getWeightInOz() {
-        return 0;
+        return super.getWeightInOz() + this.dustBathResidueInOz;
     }
 
     @Override
-    public int getAge() {
+    public int eats(String food) {
+        /**if ("pellets".equals(food)) {
+         this.weightInOz += 3;
+         } else if ("hay".equals(food)) {
+         this.weightInOz += 1;
+         }*/
         return 0;
     }
 
+    /**
+     * @return
+     */
     @Override
-    public int eats(String foodLabel) {
+    public int ageInHumanYears() {
         return 0;
     }
+
+    // Other chinchilla-specific methods can be added here
 }
