@@ -2,32 +2,27 @@ package animals;
 
 import coord.Coord2D;
 
-public class Bird implements Petable{
+public class Bird extends AbstractPet {
+    private boolean wingsClipped;
 
-    public Bird(){
-
-    }
-
-    public Bird(String blue, int i, int i1, Coord2D coord2D, boolean b) {
-    }
-
-    @Override
-    public String getName() {
-        return null;
+    public Bird(String name, int age, int weightInOz, Coord2D location, boolean wingsClipped) {
+        super(name, age, weightInOz, location);
+        this.wingsClipped = wingsClipped;
     }
 
     @Override
-    public int getWeightInOz() {
+    public int eats(String food) {
+        if ("seeds".equals(food)) {
+            this.weightInOz += 1; // Bird eats 1 unit of seeds
+        }
+        // Additional food types can be added here if needed
         return 0;
     }
 
-    @Override
-    public int getAge() {
-        return 0;
+    public int ageInHumanYears() {
+        int ageInHuman = this.age * 2;
+        return ageInHuman;
     }
 
-    @Override
-    public int eats(String foodLabel) {
-        return 0;
-    }
+    // Other bird-specific methods can be added here
 }

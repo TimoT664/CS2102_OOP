@@ -30,5 +30,6 @@ public interface Petable {
      */
     int eats(String foodLabel);
 
+    int ageInHumanYears();
 
 }
