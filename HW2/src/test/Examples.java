@@ -196,14 +196,6 @@ public class Examples {
         BirdZone bz = new BirdZone(birds);
         assertEquals("Blue", bz.feedZone().heaviestPet().getName());
     }
-    /*
-    @Test
-    public void birdZoneTest(){
-        LinkedList<Bird> birds = new LinkedList<Bird>();
-        birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
-        BirdZone bz = new BirdZone(birds);
-        assertEquals("Blue", bz.feedZone().heaviestPet().getName());
-    }*/
 
     //CatZone test 0/21
 
@@ -244,6 +236,45 @@ public class Examples {
         assertEquals("Light", bz.heaviestPet().getName());
     }
 
+    @Test
+    public void testCatEatsNoPet() {
+        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
+        assertEquals(1, c.eats("cans"));
+    }
+
+    //eats 3 units of food when eats() is called with "pellets"
+    @Test
+    public void testCatEatsNoPetPellets() {
+        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
+        assertEquals(0, c.eats("pellets"));}
+
+    //eats 1 "treat" plus 1 extra treat for every 8 oz they weigh when eats() is called with "treats"
+    @Test
+    public void testCatEatsNoPetTreats() {
+        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
+        assertEquals(2, c.eats("treats"));}
+
+    @Test
+    public void testChinchillaEatsPellets() {
+        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
+        assertEquals(3, ch.eats("pellets"));
+    }
+
+    @Test
+    public void testChinchillaEatsHay() {
+        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
+        assertEquals(1, ch.eats("hay"));
+    }
+
+
+    @Test
+    public void testChinchillaZoneLabel() {
+        LinkedList<Chinchilla> chinchillas = new LinkedList<>();
+        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
+        chinchillas.add(ch);
+        ChinchillaZone dustyzone = new ChinchillaZone(chinchillas);
+        assertEquals(1,dustyzone.petsInZone());
+    }
 
     @Test
     public void sprTotalPets(){
@@ -322,46 +353,19 @@ public class Examples {
         assertEquals("Cat: 14 cans, 2 treats", catZone.getPantryLabel());
     }
 
-
-
     @Test
-    public void testCatEatsNoPet() {
-        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
-        assertEquals(1, c.eats("cans"));
-    }
-
-    //eats 3 units of food when eats() is called with "pellets"
-    @Test
-    public void testCatEatsNoPetPellets() {
-        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
-        assertEquals(0, c.eats("pellets"));}
-
-    //eats 1 "treat" plus 1 extra treat for every 8 oz they weigh when eats() is called with "treats"
-    @Test
-    public void testCatEatsNoPetTreats() {
-        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
-        assertEquals(2, c.eats("treats"));}
-
-    @Test
-    public void testChinchillaEatsPellets() {
-        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
-        assertEquals(3, ch.eats("pellets"));
-    }
-
-    @Test
-    public void testChinchillaEatsHay() {
-        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
-        assertEquals(1, ch.eats("hay"));
-    }
-
-
-    @Test
-    public void testChinchillaZoneLabel() {
+    public void testChinchillaZoneClosest() {
         LinkedList<Chinchilla> chinchillas = new LinkedList<>();
         Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
+        Chinchilla chC= new Chinchilla("Dummy", 4, 20, new Coord2D(1, 0), 5);
+        Chinchilla chD = new Chinchilla("White", 4, 20, new Coord2D(2, 2), 4);
+
         chinchillas.add(ch);
+        chinchillas.add(chC);
+        chinchillas.add(chD);
+
         ChinchillaZone dustyzone = new ChinchillaZone(chinchillas);
-        assertEquals(1,dustyzone.petsInZone());
+        assertEquals("Dusty", dustyzone.closestPet(0,0));
     }
 
     @Test
@@ -378,8 +382,6 @@ public class Examples {
         ChinchillaZone chinchillaZone = new ChinchillaZone(chinchillas);
         assertEquals("Dusty", chinchillaZone.getPet("Dusty").getName());
     }
-
-
 
     @Test
     public void testchinchillEats() {
@@ -425,4 +427,5 @@ public class Examples {
         assertEquals("Ginger", spr.getHeaviestPetsName());
 
     }
+
 }

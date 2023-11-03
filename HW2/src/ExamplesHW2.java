@@ -1,5 +1,8 @@
 
-import jdk.internal.jimage.ImageStrings;
+import animals.*;
+import zone.*;
+import rescue.*;
+import coord.*;
 import org.junit.Test;
 
 import java.util.LinkedList;
@@ -9,13 +12,7 @@ import static org.junit.Assert.assertNull;
 
 public class ExamplesHW2 {
 
-    public ExamplesHW2(){
-
-
-    }
-
-    /* ANIMAL TESTS */
-
+    // Bird Tests 5/5
     @Test
     public void testBirdEats(){
         Bird b = new Bird("Blue",4,12,new Coord2D(2,2),false);
@@ -26,13 +23,38 @@ public class ExamplesHW2 {
         Bird b = new Bird("Blue",4,12,new Coord2D(2,2),false);
         assertEquals(0,b.eats("worm"));
     }
-
     @Test
     public void testBirdGetName(){
         Bird b = new Bird("Blue",4,3,new Coord2D(0,0), true);
         assertEquals("Blue", b.getName());
     }
+    @Test
+    public void testBirdGetAge(){
+        Bird b = new Bird("Blue",4,3,new Coord2D(0,0), true);
+        assertEquals(4, b.getAge());
+    }
+    @Test
+    public void testBirdGetAgeZero(){
+        Bird b = new Bird("Blue",0,3,new Coord2D(0,0), true);
+        assertEquals(0, b.getAge());
+    }
+    @Test
+    public void testBirdGetAgeMinus(){
+        Bird b = new Bird("Blue",-1,3,new Coord2D(0,0), true);
+        assertEquals(-1, b.getAge());
+    }
+    @Test
+    public void testBirdWeight(){
+        Bird b = new Bird("Blue",2,3,new Coord2D(0,0), false);
+        assertEquals(3, b.getWeightInOz());
+    }
+    @Test
+    public void testBirdWeightZero(){
+        Bird b = new Bird("Blue",2,0,new Coord2D(0,0), false);
+        assertEquals(0, b.getWeightInOz());
+    }
 
+    // Cat Tests 6/7
     @Test
     public void testCatEatsYesPet(){
         Cat c = new Cat("Aria",4,12,new Coord2D(2,2),true);
@@ -43,14 +65,65 @@ public class ExamplesHW2 {
         Cat c = new Cat("Kitten",4,6,new Coord2D(2,2),true);
         assertEquals(1,c.eats("treats"));
     }
+    @Test
+    public void testCatEatsTreatsNone(){
+        Cat c = new Cat("Kitten",4,6,new Coord2D(2,2),true);
+        assertEquals(0,c.eats("something"));
+    }
+    @Test
+    public void testCatAge(){
+        Cat c = new Cat("Kitten",4,6,new Coord2D(2,2),false);
+        assertEquals(4,c.getAge());
+    }
+    @Test
+    public void testCatAgeMinus(){
+        Cat c = new Cat("Kitten",-4,6,new Coord2D(2,2),false);
+        assertEquals(-4,c.getAge());
+    }
+    @Test
+    public void testCatWeight(){
+        Cat c = new Cat("Kitten",4,6,new Coord2D(2,2),false);
+        assertEquals(6,c.getWeightInOz());
+    }
+    @Test
+    public void testCatWeightZero(){
+        Cat c = new Cat("Kitten",4,0,new Coord2D(2,2),false);
+        assertEquals(0,c.getWeightInOz());
+    }
 
-
+    // Chinchilla Tests 7/7
     @Test
     public void testChinchillaWeightInOz(){
         Chinchilla ch = new Chinchilla("Dusty",4,20,new Coord2D(0,0), 4);
         assertEquals(24, ch.getWeightInOz());
     }
+    @Test
+    public void testChinchillaAge(){
+        Chinchilla ch = new Chinchilla("Dusty",4,20,new Coord2D(0,0), 4);
+        assertEquals(4, ch.getAge());
+    }
+    @Test
+    public void testChinchillaNegativeAge(){
+        Chinchilla ch = new Chinchilla("Dusty",-4,20,new Coord2D(0,0), 4);
+        assertEquals(-4, ch.getAge());
+    }
+    @Test
+    public void testChinchillaZeroAge(){
+        Chinchilla ch = new Chinchilla("Dusty",0,20,new Coord2D(0,0), 4);
+        assertEquals(0, ch.getAge());
+    }
+    @Test
+    public void testChinchillaEatingPellets(){
+        Chinchilla ch = new Chinchilla("Dusty",0,20,new Coord2D(0,0), 4);
+        assertEquals(3, ch.eats("pellets"));
+    }
+    @Test
+    public void testChinchillaEatingHay(){
+        Chinchilla ch = new Chinchilla("Dusty",0,20,new Coord2D(0,0), 4);
+        assertEquals(1, ch.eats("hay"));
+    }
 
+    // Summarized Test
     @Test
     public void animalGetName(){
         Bird b = new Bird("Blue",4,3,new Coord2D(0,0), true);
@@ -60,6 +133,64 @@ public class ExamplesHW2 {
         assertEquals("Aria", c.getName());
         assertEquals("Dusty", ch.getName());
     }
+
+    /** ZONE Tests */
+    //Birdzone test 14/21
+    @Test
+    public void birdZoneTestPetsInZone(){
+        LinkedList<Bird> birds = new LinkedList<Bird>();
+        birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
+        BirdZone bz = new BirdZone(birds);
+        assertEquals(1, bz.feedZone().petsInZone());
+    }
+
+    @Test
+    public void birdZoneTestBirdInHumanYear(){
+        LinkedList<Bird> birds = new LinkedList<Bird>();
+        birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
+        BirdZone bz = new BirdZone(birds);
+        assertEquals(9, bz.inHumanYears("Blue"));
+    }
+    @Test
+    public void birdZoneTestClosestClipped(){
+        LinkedList<Bird> birds = new LinkedList<Bird>();
+        birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
+        BirdZone bz = new BirdZone(birds);
+        assertEquals("Blue", bz.closestPet(4,5));
+    }
+    @Test
+    public void birdZoneTestRestockBird(){
+        LinkedList<Bird> birds = new LinkedList<Bird>();
+        birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
+        BirdZone bz = new BirdZone(birds);
+        assertEquals("Bird: 2 seeds", bz.restockPetFood("seeds",2).getPantryLabel());
+    }
+    @Test
+    public void birdZoneTestRestockHayBird(){
+        LinkedList<Bird> birds = new LinkedList<Bird>();
+        birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
+        BirdZone bz = new BirdZone(birds);
+        assertEquals("Bird: 0 seeds", bz.restockPetFood("hay",2).getPantryLabel());
+    }
+    @Test
+    public void birdZoneTestRestockNegativeSeeds(){
+        LinkedList<Bird> birds = new LinkedList<Bird>();
+        birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
+        BirdZone bz = new BirdZone(birds);
+        assertEquals("Bird: -2 seeds", bz.restockPetFood("seeds",-2).getPantryLabel());
+    }
+    @Test
+    public void birdZoneTestHeaviestPetInFeedZone(){
+        LinkedList<Bird> birds = new LinkedList<Bird>();
+        birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
+        BirdZone bz = new BirdZone(birds);
+        assertEquals("Blue", bz.feedZone().heaviestPet().getName());
+    }
+
+    //CatZone test 0/21
+
+    //ChinchillaZone test 0/21
+
 
     /** ZONE Tests */
 
@@ -86,14 +217,6 @@ public class ExamplesHW2 {
     }
 
     @Test
-    public void birdZoneTestClosestClipped(){
-        LinkedList<Bird> birds = new LinkedList<Bird>();
-        birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
-        BirdZone bz = new BirdZone(birds);
-        assertEquals("Blue", bz.closestPet(4,5));
-    }
-
-    @Test
     public void birdZoneTestHeaviest1Bird(){
         LinkedList<Bird> birds = new LinkedList<Bird>();
         birds.add(new Bird("Blue",1,3,new Coord2D(2,2),true));
@@ -103,7 +226,45 @@ public class ExamplesHW2 {
         assertEquals("Light", bz.heaviestPet().getName());
     }
 
+    @Test
+    public void testCatEatsNoPet() {
+        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
+        assertEquals(1, c.eats("cans"));
+    }
 
+    //eats 3 units of food when eats() is called with "pellets"
+    @Test
+    public void testCatEatsNoPetPellets() {
+        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
+        assertEquals(0, c.eats("pellets"));}
+
+    //eats 1 "treat" plus 1 extra treat for every 8 oz they weigh when eats() is called with "treats"
+    @Test
+    public void testCatEatsNoPetTreats() {
+        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
+        assertEquals(2, c.eats("treats"));}
+
+    @Test
+    public void testChinchillaEatsPellets() {
+        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
+        assertEquals(3, ch.eats("pellets"));
+    }
+
+    @Test
+    public void testChinchillaEatsHay() {
+        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
+        assertEquals(1, ch.eats("hay"));
+    }
+
+
+    @Test
+    public void testChinchillaZoneLabel() {
+        LinkedList<Chinchilla> chinchillas = new LinkedList<>();
+        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
+        chinchillas.add(ch);
+        ChinchillaZone dustyzone = new ChinchillaZone(chinchillas);
+        assertEquals(1,dustyzone.petsInZone());
+    }
 
     @Test
     public void sprTotalPets(){
@@ -182,48 +343,6 @@ public class ExamplesHW2 {
         assertEquals("Cat: 14 cans, 2 treats", catZone.getPantryLabel());
     }
 
-
-
-    @Test
-    public void testCatEatsNoPet() {
-        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
-        assertEquals(1, c.eats("cans"));
-    }
-
-    //eats 3 units of food when eats() is called with "pellets"
-    @Test
-    public void testCatEatsNoPetPellets() {
-        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
-        assertEquals(0, c.eats("pellets"));}
-
-    //eats 1 "treat" plus 1 extra treat for every 8 oz they weigh when eats() is called with "treats"
-    @Test
-    public void testCatEatsNoPetTreats() {
-        Cat c = new Cat("Aria", 4, 12, new Coord2D(2, 2), false);
-        assertEquals(2, c.eats("treats"));}
-
-    @Test
-    public void testChinchillaEatsPellets() {
-        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
-        assertEquals(3, ch.eats("pellets"));
-    }
-
-    @Test
-    public void testChinchillaEatsHay() {
-        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
-        assertEquals(1, ch.eats("hay"));
-    }
-
-
-    @Test
-    public void testChinchillaZoneLabel() {
-        LinkedList<Chinchilla> chinchillas = new LinkedList<>();
-        Chinchilla ch = new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4);
-        chinchillas.add(ch);
-        ChinchillaZone dustyzone = new ChinchillaZone(chinchillas);
-        assertEquals(1,dustyzone.petsInZone());
-    }
-
     @Test
     public void testChinchillaZoneClosest() {
         LinkedList<Chinchilla> chinchillas = new LinkedList<>();
@@ -236,7 +355,7 @@ public class ExamplesHW2 {
         chinchillas.add(chD);
 
         ChinchillaZone dustyzone = new ChinchillaZone(chinchillas);
-        assertEquals("Dusty", dustyzone.petsInZone());
+        assertEquals("Dusty", dustyzone.closestPet(0,0));
     }
 
     @Test
@@ -253,8 +372,6 @@ public class ExamplesHW2 {
         ChinchillaZone chinchillaZone = new ChinchillaZone(chinchillas);
         assertEquals("Dusty", chinchillaZone.getPet("Dusty").getName());
     }
-
-
 
     @Test
     public void testchinchillEats() {
