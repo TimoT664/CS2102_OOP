@@ -1,3 +1,5 @@
+package rescue;
+
 import animals.Petable;
 import zone.Zoneable;
 

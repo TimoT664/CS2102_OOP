@@ -20,7 +20,7 @@ public class Bird extends AbstractPet {
     }
 
     public int ageInHumanYears() {
-        int ageInHuman = this.age * 2;
+        int ageInHuman = this.age * 9;
         return ageInHuman;
     }
 
