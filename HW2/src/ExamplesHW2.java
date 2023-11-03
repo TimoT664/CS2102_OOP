@@ -11,6 +11,7 @@ public class ExamplesHW2 {
 
     public ExamplesHW2(){
 
+
     }
 
     /* ANIMAL TESTS */
