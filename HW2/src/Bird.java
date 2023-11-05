@@ -1,7 +1,3 @@
-package animals;
-
-import coord.Coord2D;
-
 public class Bird extends AbstractPet {
     private boolean wingsClipped;
 

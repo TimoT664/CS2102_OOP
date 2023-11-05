@@ -1,8 +1,3 @@
-package rescue;
-
-import animals.Petable;
-import zone.Zoneable;
-
 import java.util.LinkedList;
 
 /** The top-level class for the PetRescue */

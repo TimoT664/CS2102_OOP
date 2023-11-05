@@ -1,15 +1,3 @@
-package test;
-
-import animals.Bird;
-import animals.Cat;
-import animals.Chinchilla;
-import coord.Coord2D;
-import rescue.SuperPetRescue;
-import zone.BirdZone;
-import zone.CatZone;
-import zone.ChinchillaZone;
-import zone.Zoneable;
-
 import org.junit.Test;
 import java.util.LinkedList;
 import static org.junit.Assert.*;

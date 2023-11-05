@@ -1,8 +1,3 @@
-package zone;
-
-import animals.Petable;
-import zone.Zoneable;
-
 import java.util.LinkedList;
 
 /**

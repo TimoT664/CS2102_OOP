@@ -1,7 +1,3 @@
-package zone;
-
-import animals.Petable;
-
 /** The interface for a zone at the pet rescue and what it needs to be able to compute */
 public interface Zoneable {
 

@@ -1,8 +1,3 @@
-package zone;
-
-import animals.Chinchilla;
-import zone.AbstractZone;
-
 import java.util.LinkedList;
 
 /**

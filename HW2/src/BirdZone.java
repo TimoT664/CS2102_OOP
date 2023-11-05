@@ -1,8 +1,3 @@
-package zone;
-
-import animals.Bird;
-import zone.AbstractZone;
-
 import java.util.LinkedList;
 
 /**

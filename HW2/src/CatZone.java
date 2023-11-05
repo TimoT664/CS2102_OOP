@@ -1,9 +1,3 @@
-package zone;
-
-import animals.Cat;
-import zone.AbstractZone;
-import zone.Zoneable;
-
 import java.util.LinkedList;
 
 /**

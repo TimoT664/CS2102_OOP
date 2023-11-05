@@ -1,8 +1,3 @@
-package animals;
-
-import animals.AbstractPet;
-import coord.Coord2D;
-
 public class Chinchilla extends AbstractPet {
     private int dustBathResidueInOz;
 

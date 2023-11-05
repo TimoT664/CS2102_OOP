@@ -1,8 +1,4 @@
 
-import animals.*;
-import zone.*;
-import rescue.*;
-import coord.*;
 import org.junit.Test;
 
 import java.util.LinkedList;

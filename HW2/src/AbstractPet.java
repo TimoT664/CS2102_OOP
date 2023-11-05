@@ -1,8 +1,3 @@
-package animals;
-
-
-import coord.Coord2D;
-
 public abstract class AbstractPet implements Petable {
 
     protected String name;

@@ -1,5 +1,3 @@
-package animals;
-
 /**
  * The things a pet needs to provide, generically
  */
