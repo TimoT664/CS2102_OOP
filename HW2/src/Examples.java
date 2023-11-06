@@ -413,6 +413,110 @@ public class Examples {
         assertEquals("Ginger", spr.getHeaviestPetsName());
 
     }
-}
+
+        /** Additional Tests */
+
+        // Test for null list of pets in zones
+        @Test(expected = NullPointerException.class)
+        public void testNullListInZone() {
+            new BirdZone(null);
+        }
+
+        // Test for null pet name in age calculation
+        @Test(expected = IllegalArgumentException.class)
+        public void testNullPetNameForAge() {
+            LinkedList<Bird> birds = new LinkedList<>();
+            birds.add(new Bird("Blue", 4, 3, new Coord2D(0, 0), true));
+            BirdZone birdZone = new BirdZone(birds);
+            birdZone.inHumanYears(null);
+        }
+
+        // Test for empty pet name in age calculation
+        @Test(expected = IllegalArgumentException.class)
+        public void testEmptyPetNameForAge() {
+            LinkedList<Cat> cats = new LinkedList<>();
+            cats.add(new Cat("Ginger", 10, 30, new Coord2D(0, 0), true));
+            CatZone catZone = new CatZone(cats);
+            catZone.inHumanYears("");
+        }
+
+        // Test for restocking with maximum integer value
+        @Test
+        public void testRestockWithMaxInt() {
+            LinkedList<Cat> cats = new LinkedList<>();
+            cats.add(new Cat("Ginger", 10, 30, new Coord2D(0, 0), true));
+            CatZone catZone = new CatZone(cats);
+            catZone.restockPetFood("cans", Integer.MAX_VALUE);
+            assertEquals("Cat: " + Integer.MAX_VALUE + " cans, 0 treats", catZone.getPantryLabel());
+        }
+
+        // Test for getting a pet that does not exist
+        @Test
+        public void testGetNonExistentPet() {
+            LinkedList<Chinchilla> chinchillas = new LinkedList<>();
+            chinchillas.add(new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4));
+            ChinchillaZone chinchillaZone = new ChinchillaZone(chinchillas);
+            assertNull(chinchillaZone.getPet("NonExistent"));
+        }
+
+        // Test for feeding when there is insufficient food
+        @Test
+        public void testFeedingWithInsufficientFood() {
+            LinkedList<Chinchilla> chinchillas = new LinkedList<>();
+            chinchillas.add(new Chinchilla("Dusty", 4, 20, new Coord2D(0, 0), 4));
+            ChinchillaZone chinchillaZone = new ChinchillaZone(chinchillas);
+            chinchillaZone.restockPetFood("pellets", 1); // Not enough for feeding
+            chinchillaZone.feedZone();
+            assertEquals("Chinchilla: 0 pellets, 0 hay", chinchillaZone.getPantryLabel());
+        }
+
+        // Test for concurrency issues (this is a simplistic test and may not catch all concurrency problems)
+        @Test
+        public void testConcurrencyForTotalPets() throws InterruptedException {
+            LinkedList<Zoneable> zones = new LinkedList<>();
+
+            LinkedList<Bird> birds = new LinkedList<>();
+            birds.add(new Bird("Fluffy", 10, 10, new Coord2D(0, 0), true));
+            BirdZone birdZone = new BirdZone(birds);
+            zones.add(birdZone);
+
+            LinkedList<Cat> cats = new LinkedList<>();
+            cats.add(new Cat("Ginger", 10, 30, new Coord2D(0, 0), true));
+            CatZone catZone = new CatZone(cats);
+            zones.add(catZone);
+
+            LinkedList<Chinchilla> chinchillas = new LinkedList<>();
+            chinchillas.add(new Chinchilla("Dusty", 10, 20, new Coord2D(0, 0), 4));
+            ChinchillaZone chinchillaZone = new ChinchillaZone(chinchillas);
+            zones.add(chinchillaZone);
+
+            SuperPetRescue spr = new SuperPetRescue(zones);
+
+            Thread thread1 = new Thread(() -> {
+                for (int i = 0; i < 1000; i++) {
+                    spr.totalPets();
+                }
+            });
+
+            Thread thread2 = new Thread(() -> {
+                for (int i = 0; i < 1000; i++) {
+                    spr.totalPets();
+                }
+            });
+
+            thread1.start();
+            thread2.start();
+
+            thread1.join();
+            thread2.join();
+
+            // If there are no concurrency issues, the total number of pets should remain consistent
+            assertEquals(3, spr.totalPets());
+        }
+
+
+    }
+
+
 
 
