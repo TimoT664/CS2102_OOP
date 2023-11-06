@@ -24,5 +24,10 @@ public class Cat extends AbstractPet {
         return 0;
     }
 
+    @Override
+    public Coord2D getLocation() {
+        return this.location;
+    }
+
     // Other cat-specific methods can be added here
 }

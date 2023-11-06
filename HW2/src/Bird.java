@@ -20,5 +20,10 @@ public class Bird extends AbstractPet {
         return ageInHuman;
     }
 
+    @Override
+    public Coord2D getLocation() {
+        return this.location;
+    }
+
     // Other bird-specific methods can be added here
 }

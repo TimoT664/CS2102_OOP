@@ -30,4 +30,8 @@ public class Chinchilla extends AbstractPet {
     }
 
     // Other chinchilla-specific methods can be added here
+    @Override
+    public Coord2D getLocation() {
+        return this.location;
+    }
 }

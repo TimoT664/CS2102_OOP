@@ -93,11 +93,11 @@ public abstract class AbstractZone implements Zoneable {
         double minDistance = Double.MAX_VALUE;
 
         for (Petable pet : pets) {
-            /**double distance = pet.getLocation().distanceTo(x, y);
+             double distance = pet.getLocation().distanceTo(x, y);
              if (distance < minDistance) {
-             minDistance = distance;
-             closest = pet;
-             }*/
+                 minDistance = distance;
+                 closest = pet;
+             }
         }
         return closest.getName();
     }

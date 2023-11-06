@@ -30,4 +30,5 @@ public interface Petable {
 
     int ageInHumanYears();
 
+    Coord2D getLocation();
 }
