@@ -30,5 +30,7 @@ public interface Petable {
 
     int ageInHumanYears();
 
+    int foodNeeded(String food);
+
     Coord2D getLocation();
 }

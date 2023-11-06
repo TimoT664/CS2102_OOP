@@ -13,11 +13,11 @@ public class Chinchilla extends AbstractPet {
 
     @Override
     public int eats(String food) {
-        /**if ("pellets".equals(food)) {
-         this.weightInOz += 3;
+        if ("pellets".equals(food)) {
+            this.weightInOz += 3;
          } else if ("hay".equals(food)) {
-         this.weightInOz += 1;
-         }*/
+            this.weightInOz += 1;
+        }
         return 0;
     }
 
@@ -26,6 +26,16 @@ public class Chinchilla extends AbstractPet {
      */
     @Override
     public int ageInHumanYears() {
+        return 0;
+    }
+
+    @Override
+    public int foodNeeded(String food) {
+        if ("pellets".equals(food)) {
+           return 3;
+        } else if ("hay".equals(food)) {
+            return 1;
+        }
         return 0;
     }
 

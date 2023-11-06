@@ -1,5 +1,5 @@
 public class Bird extends AbstractPet {
-    private boolean wingsClipped;
+    public boolean wingsClipped;
 
     public Bird(String name, int age, int weightInOz, Coord2D location, boolean wingsClipped) {
         super(name, age, weightInOz, location);
@@ -18,6 +18,14 @@ public class Bird extends AbstractPet {
     public int ageInHumanYears() {
         int ageInHuman = this.age * 9;
         return ageInHuman;
+    }
+
+    @Override
+    public int foodNeeded(String food) {
+        if ("seeds".equals(food)) {
+            return 1; // Bird eats 1 unit of seeds
+        }
+        return 0;
     }
 
     @Override

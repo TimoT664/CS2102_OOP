@@ -6,19 +6,15 @@ import java.util.LinkedList;
  */
 public abstract class AbstractZone implements Zoneable {
     protected LinkedList<? extends Petable> pets;
-    protected String foodType;
-    protected int foodAmount;
+    //protected String foodType;
+    //protected int foodAmount;
 
     /**
      * Constructor for the AbstractZone.
      * @param pets The list of pets in the zone.
-     * @param foodType The type of food in the zone's pantry.
-     * @param foodAmount The amount of food in the zone's pantry.
      */
-    public AbstractZone(LinkedList<? extends Petable> pets, String foodType, int foodAmount) {
+    public AbstractZone(LinkedList<? extends Petable> pets) {
         this.pets = pets;
-        this.foodType = foodType;
-        this.foodAmount = foodAmount;
     }
 
     @Override
@@ -50,27 +46,6 @@ public abstract class AbstractZone implements Zoneable {
     }
 
     @Override
-    public Zoneable restockPetFood(String foodName, int foodAmt) {
-        if (this.foodType.equals(foodName)) {
-            this.foodAmount += foodAmt;
-        }
-        return this;
-    }
-
-    @Override
-    public Zoneable feedZone() {
-        /**for (Petable pet : pets) {
-         int foodNeeded = pet.foodNeeded();
-         if (foodAmount >= foodNeeded) {
-         foodAmount -= foodNeeded;
-         } else {
-         foodAmount = 0;
-         }
-         }*/
-        return null;
-    }
-
-    @Override
     public Petable getPet(String petName) {
         for (Petable pet : pets) {
             if (pet.getName().equals(petName)) {
@@ -78,11 +53,6 @@ public abstract class AbstractZone implements Zoneable {
             }
         }
         return null;
-    }
-
-    @Override
-    public String getPantryLabel() {
-        return String.format("%s: %d %s", zoneLabel(), foodAmount, foodType);
     }
 
     @Override
@@ -113,5 +83,32 @@ public abstract class AbstractZone implements Zoneable {
      * @return the label for the specific zone type.
      */
     protected abstract String zoneLabel();
+
+           /* @Override
+    public Zoneable restockPetFood(String foodName, int foodAmt) {
+        if (this.foodType.equals(foodName) && foodAmt >= 0) {
+            this.foodAmount += foodAmt;
+        }
+        return this;
+    }*/
+
+
+/*    @Override
+    public Zoneable feedZone() {
+        for (Petable pet : pets) {
+             int foodNeeded = pet.foodNeeded(this.foodType);
+             if (foodAmount >= foodNeeded) {
+                 foodAmount -= foodNeeded;
+             } else {
+                 foodAmount = 0;
+             }
+        }
+        return this;
+    }*/
+    /*
+    @Override
+    public String getPantryLabel() {
+        return String.format("%s: %d %s", zoneLabel(), foodAmount, foodType);
+    }*/
 }
 
