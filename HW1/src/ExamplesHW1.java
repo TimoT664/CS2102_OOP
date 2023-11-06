@@ -2,12 +2,12 @@ import org.junit.Test;
 import java.util.LinkedList;
 import static org.junit.Assert.*;
 
-public class Examples {
+public class ExamplesHW1 {
 
     PetRescue pr;
     LinkedList<Integer> someBirdWeights = new LinkedList<Integer>();
 
-    public Examples(){
+    public ExamplesHW1(){
         someBirdWeights.add(10); // 10oz
     }
 

@@ -1,14 +1,12 @@
+
 import org.junit.Test;
+
 import java.util.LinkedList;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class Examples {
-
-    public Examples(){
-
-    }
-
-    /* ANIMAL TESTS */
 
     // Bird Tests 5/5
     @Test
@@ -415,5 +413,6 @@ public class Examples {
         assertEquals("Ginger", spr.getHeaviestPetsName());
 
     }
-
 }
+
+
