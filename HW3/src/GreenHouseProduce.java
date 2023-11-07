@@ -18,6 +18,7 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible{
 
     @Override
     public TempHumidReading middleReading(double onDate) {
+
         return null;
     }
 }

@@ -15,6 +15,10 @@ public class SuperTempHumidReading extends TempHumidReading{
 
     @Override
     public boolean equals(Object obj) {
+        //TODO
+        //overrides equals() to produce true if and only if the temperature values and humidity values of the two objects are within 0.001 respectively.
+        //You may want to use Math.abs() for this
+
         if (obj == null) {
             return false;
         }
