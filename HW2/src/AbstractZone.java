@@ -53,6 +53,10 @@ public abstract class AbstractZone implements Zoneable {
      */
     @Override
     public int inHumanYears(String petName) {
+        if (petName == "" || petName == null)
+        {
+            throw new IllegalArgumentException();
+        }
         for (Petable pet : pets) {
             if (pet.getName().equals(petName)) {
                 return pet.getAge() * humanYearMultiplier();

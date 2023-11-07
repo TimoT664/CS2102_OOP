@@ -70,13 +70,18 @@ public class ChinchillaZone extends AbstractZone {
             if (this.hay >= hayNeeded) {
                 this.hay -= hayNeeded;
             }
+            else {
+                this.hay = 0;
+            }
             if (this.pellets >= pelletsNeeded) {
                 this.pellets -= pelletsNeeded;
+            } else{
+                this.pellets = 0;
             }
 
             // Ensure that food quantities do not go negative
-            this.hay = Math.max(this.hay, 0);
-            this.pellets = Math.max(this.pellets, 0);
+            //this.hay = Math.max(this.hay, 0);
+            //this.pellets = Math.max(this.pellets, 0);
         }
         return this;
     }

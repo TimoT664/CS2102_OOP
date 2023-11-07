@@ -83,12 +83,12 @@ public class Dog extends AbstractPet {
         return this.location;
     }
 
-    public int getAgeInHumanYears() {
+    /*public int getAgeInHumanYears() {
         return 0;
-    }
+    }*/
 
     public boolean isPet() {
-        return false;
+        return true;
     }
 
     // Other dog-specific methods can be added here

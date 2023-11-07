@@ -40,10 +40,13 @@ public class Chinchilla extends AbstractPet {
     public int eats(String food) {
         if ("pellets".equals(food)) {
             this.weightInOz += 3; // Chinchilla gains 3 ounces when eating pellets
-        } else if ("hay".equals(food)) {
+            return 3;
+        }else if ("hay".equals(food)) {
             this.weightInOz += 1; // Chinchilla gains 1 ounce when eating hay
+            return 1;
+        } else {
+            return 0; // The method currently does not utilize the return value
         }
-        return 0; // The method currently does not utilize the return value
     }
 
     /**
