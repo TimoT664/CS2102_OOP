@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class Examples {
+public class ExamplesHW2 {
 
     // Bird Tests 5/5
     @Test
