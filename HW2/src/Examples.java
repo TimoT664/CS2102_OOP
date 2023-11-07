@@ -570,8 +570,7 @@ public class Examples {
             assertEquals(new Coord2D(1,1), d.getLocation());
         }
 
-        // Add more tests as needed for other methods in the Dog class
-    }
+           }
 
 
 
