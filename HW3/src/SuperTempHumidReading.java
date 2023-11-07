@@ -1,44 +1,34 @@
-public class SuperTempHumidReading extends TempHumidReading{
+public class SuperTempHumidReading extends TempHumidReading {
 
-    public SuperTempHumidReading(){
+    public SuperTempHumidReading() {
         super(-999, -999);
     }
 
-    public SuperTempHumidReading(TempHumidReading tempHumidReadingDTO){
+    public SuperTempHumidReading(TempHumidReading tempHumidReadingDTO) {
         super(tempHumidReadingDTO.temperature, tempHumidReadingDTO.humidity);
     }
 
-    public SuperTempHumidReading(double temperature, double humidity){
+    public SuperTempHumidReading(double temperature, double humidity) {
         super(temperature, humidity);
     }
 
-
     @Override
     public boolean equals(Object obj) {
-        //TODO
-        //overrides equals() to produce true if and only if the temperature values and humidity values of the two objects are within 0.001 respectively.
-        //You may want to use Math.abs() for this
-
-        if (obj == null) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        SuperTempHumidReading that = (SuperTempHumidReading) obj;
+        return Math.abs(this.temperature - that.temperature) < 0.001 &&
+                Math.abs(this.humidity - that.humidity) < 0.001;
     }
 
     @Override
     public String toString() {
-        //TODO
-        /*
-        -> "{98.6F;33.4%}"
-        -> "{Err;33.4%}"
-        -> "{Err;Err}"
-        -> "{98.6F;Err}"
-        use String.format() and the pattern "%,.1f" to turn a double into a 1 decimal place string
-        use the pattern "%%" to put in a literal % sign
-        Replace the temperature, e.g. "98.6F", with "Err" when the temperature is -999.0
-        Replace the humidity, e.g. "33.4%" with "Err" when the humidity is -999.0
-         */
-        return String.format("%,.1f");
+        String temperatureString = this.temperature == -999 ? "Err" : String.format("%,.1fF", this.temperature);
+        String humidityString = this.humidity == -999 ? "Err" : String.format("%,.1f%%", this.humidity);
+        return String.format("{%s;%s}", temperatureString, humidityString);
     }
-
 }
