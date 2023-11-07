@@ -514,8 +514,68 @@ public class Examples {
             assertEquals(3, spr.totalPets());
         }
 
+    public class DogTests {
 
+        // Assuming Dog constructor: Dog(String name, int age, int weightInOz, Coord2D location, boolean isPet)
+
+        // Dog Tests
+        @Test
+        public void testDogEats() {
+            Dog d = new Dog("Buddy", 5, 50, new Coord2D(1,1), true);
+            assertEquals(2, d.eats("kibble"));
+        }
+
+        @Test
+        public void testDogEatsNone() {
+            Dog d = new Dog("Buddy", 5, 50, new Coord2D(1,1), true);
+            assertEquals(0, d.eats("chocolate")); // Assuming chocolate is not a valid food for dogs
+        }
+
+        @Test
+        public void testDogGetName() {
+            Dog d = new Dog("Buddy", 5, 50, new Coord2D(1,1), true);
+            assertEquals("Buddy", d.getName());
+        }
+
+        @Test
+        public void testDogGetAge() {
+            Dog d = new Dog("Buddy", 5, 50, new Coord2D(1,1), true);
+            assertEquals(5, d.getAge());
+        }
+
+        @Test
+        public void testDogGetWeight() {
+            Dog d = new Dog("Buddy", 5, 50, new Coord2D(1,1), true);
+            assertEquals(50, d.getWeightInOz());
+        }
+
+        // Assuming Dog's age in human years is calculated as actual age * 7
+        @Test
+        public void testDogAgeInHumanYears() {
+            Dog d = new Dog("Buddy", 5, 50, new Coord2D(1,1), true);
+            assertEquals(35, d.getAgeInHumanYears());
+        }
+
+        // Assuming a method to check if the dog is a pet
+        @Test
+        public void testIsPet() {
+            Dog d = new Dog("Buddy", 5, 50, new Coord2D(1,1), true);
+            assertEquals(true, d.isPet());
+        }
+
+        // Assuming a method to get the dog's location
+        @Test
+        public void testGetLocation() {
+            Dog d = new Dog("Buddy", 5, 50, new Coord2D(1,1), true);
+            assertEquals(new Coord2D(1,1), d.getLocation());
+        }
+
+        // Add more tests as needed for other methods in the Dog class
     }
+
+
+
+}
 
 
 
