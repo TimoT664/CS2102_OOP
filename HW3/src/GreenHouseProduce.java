@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
+public class
+GreenHouseProduce extends AbsGreenHouse implements Sensible {
 
     private List<TempHumidReading> readings;
     private TempHumidReading middleReading;
