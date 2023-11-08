@@ -17,7 +17,7 @@ public class Examples {
     public Examples() {
         data = new LinkedList<>();
         data.add(20231106010101.0);
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             data.add((double) (i % 50) * 2);
 
         }
@@ -132,7 +132,38 @@ public class Examples {
         green.pollSensorData(List.of(20231106010101.0, 45.5, 34.0, 46.6, 40.0, 20231130020202.0, 22.2, 20.0, 35.5, 30.0, -999.0, 31.0, 32.2, -999.0));
         assertEquals(new SuperTempHumidReading(35.5, 31.0), green.middleReading());
     }
+
+    @Test
+    public void testTimingNurserySlowerThanProduce() {
+        GreenHouseNursery nursery = new GreenHouseNursery();
+        GreenHouseProduce produce = new GreenHouseProduce();
+
+        long time1 = System.currentTimeMillis();
+        nursery.pollSensorData(data);
+        long time2 = System.currentTimeMillis();
+        produce.pollSensorData(data);
+        long time3 = System.currentTimeMillis();
+        System.out.println(String.format("nursery.pollSensorData(data); : produce.pollSensorData(data) :: %s : %s", time2 - time1, time3 - time2));
+        assertTrue(time2 - time1 < time3 - time2);
+    }
+
+    @Test
+    public void testTimingProduceSlowerThanNursery() {
+        GreenHouseNursery nursery = new GreenHouseNursery();
+        GreenHouseProduce produce = new GreenHouseProduce();
+
+        long time1 = System.currentTimeMillis();
+        nursery.middleReading();
+        long time2 = System.currentTimeMillis();
+        produce.middleReading();
+        long time3 = System.currentTimeMillis();
+        System.out.println(String.format("nursery.middleReading() : produce.middleReading() :: %s : %s", time2 - time1, time3 - time2));
+        assertFalse(time2 - time1 < time3 - time2);
+    }
+
+
 }
+
 
 
 //assertEquals(new SuperTempHumidReading(44.4,33.54), myGreenHouse.middleReading());
