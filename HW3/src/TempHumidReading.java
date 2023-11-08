@@ -21,4 +21,12 @@ public class TempHumidReading {
         this.temperature = temperature;
         this.humidity = humidity;
     }
+
+    public double getTemperature() {
+        return 0;
+    }
+
+    public double getHumidity() {
+        return 0;
+    }
 }

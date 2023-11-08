@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 public class
 GreenHouseProduce extends AbsGreenHouse implements Sensible {
 
-    private List<TempHumidReading> readings;
+    List<TempHumidReading> readings;
     private TempHumidReading middleReading;
 
     public GreenHouseProduce() {
@@ -46,5 +46,13 @@ GreenHouseProduce extends AbsGreenHouse implements Sensible {
         // This method would require additional logic to find the reading for a specific date
         // For now, it's not implemented as it requires more context on how the data is structured
         return null;
+    }
+
+    public int getSensorDataSize() {
+        return 0;
+    }
+
+    public int getNumberOfReadings() {
+        return 0;
     }
 }
