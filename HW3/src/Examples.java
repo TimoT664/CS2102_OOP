@@ -166,14 +166,18 @@ public class Examples {
 
     @Test
     public void testMiddleReadingWithNoDataNew() {
-        assertNull("Middle reading should be null when no data is present", greenHouseProduce.middleReading());
+        GreenHouseProduce producer = new GreenHouseProduce();
+        SuperTempHumidReading temp = new SuperTempHumidReading();
+
+        assertEquals("Middle reading should be -999s when no data is present", temp, producer.middleReading());
     }
 
     @Test
     public void testMiddleReadingWithDataNew() {
-        greenHouseProduce.pollSensorData(sensorData);
-        SuperTempHumidReading expectedReading = new SuperTempHumidReading(/* Expected values based on sensorData */);
-        SuperTempHumidReading actualReading = (SuperTempHumidReading) greenHouseProduce.middleReading();
+        GreenHouseProduce producer = new GreenHouseProduce();
+        producer.pollSensorData(sensorData);
+        SuperTempHumidReading expectedReading = new SuperTempHumidReading(35.5, 31.0);
+        SuperTempHumidReading actualReading = (SuperTempHumidReading) producer.middleReading();
         assertEquals("Middle reading should match expected reading", expectedReading, actualReading);
     }
 
@@ -185,5 +189,38 @@ public class Examples {
         SuperTempHumidReading actualReading = (SuperTempHumidReading) greenHouseProduce.middleReading(onDate);
         assertEquals("Middle reading on specific date should match expected reading", expectedReading, actualReading);
     }
+    /**@Test
+    public void testAddProduce() {
+        GreenHouseNursery nursery = new GreenHouseNursery();
+        GreenHouseProduce produce = new GreenHouseProduce();
+        nursery.addProduce(produce);
+        assertEquals("Produce should be added to nursery", 1, nursery.getProduceCount());
+    } */
+
+    /**@Test
+    public void testRemoveProduce() {
+        GreenHouseNursery nursery = new GreenHouseNursery();
+        GreenHouseProduce produce = new GreenHouseProduce();
+        nursery.addProduce(produce);
+        nursery.removeProduce(produce);
+        assertEquals("Produce should be removed from nursery", 0, nursery.getProduceCount());
+    }*/
+    /**@Test
+    public void testNurseryWithNoProduce() {
+        GreenHouseNursery nursery = new GreenHouseNursery();
+        assertNull("No data should be returned when nursery has no produce", nursery.getAggregateData());
+    }*/
+   /** @Test
+    public void testSpecificDateDataRetrieval() {
+        GreenHouseNursery nursery = new GreenHouseNursery();
+        GreenHouseProduce produce = new GreenHouseProduce();
+        produce.pollSensorData(sensorData);
+        nursery.addProduce(produce);
+        double specificDate = 20231106010101.0;
+        SuperTempHumidReading expectedReading = new SuperTempHumidReading(45.5, 34.0, 46.6, 40.0,)
+        SuperTempHumidReading actualReading = nursery.getReadingOnDate(specificDate);
+        assertEquals("Data on specific date should match expected values", expectedReading, actualReading);
+    }*/
+
     // END NEW TESTS
 }

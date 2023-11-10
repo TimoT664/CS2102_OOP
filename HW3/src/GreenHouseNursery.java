@@ -53,4 +53,22 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
     public int getErrorReadingsCount() {
         return 0;
     }
+
+    public void addProduce(GreenHouseProduce produce) {
+    }
+
+    public int getProduceCount() {
+        return 0;
+    }
+
+    public void removeProduce(GreenHouseProduce produce) {
+    }
+
+    public Object getAggregateData() {
+        return null;
+    }
+
+    public SuperTempHumidReading getReadingOnDate(double specificDate) {
+        return null;
+    }
 }
