@@ -102,6 +102,22 @@ public class Examples {
         assertEquals(new SuperTempHumidReading(35.5, 31.0), green.middleReading());
     }
 
+    @Test
+    public void testMiddleReadingsNurseryOnDate() {
+        GreenHouseNursery green = new GreenHouseNursery();
+        green.pollSensorData(values);
+        double onDate = 20231106010101.0;
+        assertEquals(new SuperTempHumidReading(-999, -999), green.middleReading(onDate));
+    }
+
+    @Test
+    public void testMiddleReadingsProduceOnDate() {
+        GreenHouseProduce prod = new GreenHouseProduce();
+        prod.pollSensorData(values);
+        double onDate = 20231106010101.0;
+        assertEquals(new SuperTempHumidReading(-999, -999), prod.middleReading(onDate));
+    }
+
     public void testEmptyListNursery() {
         GreenHouseNursery green = new GreenHouseNursery();
         green.pollSensorData(new LinkedList<Double>());
@@ -135,7 +151,11 @@ public class Examples {
     }
 
     // Additional tests for GreenHouseProduce class
-
+    @Test
+    public void testGreenHouseProduceStuff() {
+        greenHouseProduce.middleReading();
+        assertNotNull("Produce object should not be null", greenHouseProduce);
+    }
 
     @Before
     public void setUpNew() {
@@ -178,17 +198,19 @@ public class Examples {
         producer.pollSensorData(sensorData);
         SuperTempHumidReading expectedReading = new SuperTempHumidReading(35.5, 31.0);
         SuperTempHumidReading actualReading = (SuperTempHumidReading) producer.middleReading();
-        assertEquals("Middle reading should match expected reading", expectedReading, actualReading);
+        assertEquals("Middle reading should match expected reading - produce", expectedReading, actualReading);
     }
 
     @Test
-    public void testMiddleReadingOnSpecificDateNew() {
-        greenHouseProduce.pollSensorData(sensorData);
+    public void testMiddleReadingOnSpecificDateNursery() {
+        GreenHouseNursery greenHouseNursery = new GreenHouseNursery();
+        greenHouseNursery.pollSensorData(sensorData);
         double onDate = 20231106010101.0;
         SuperTempHumidReading expectedReading = new SuperTempHumidReading(/* Expected values for this date */);
-        SuperTempHumidReading actualReading = (SuperTempHumidReading) greenHouseProduce.middleReading(onDate);
-        assertEquals("Middle reading on specific date should match expected reading", expectedReading, actualReading);
+        SuperTempHumidReading actualReading = (SuperTempHumidReading) greenHouseNursery.middleReading(onDate);
+        assertEquals("Middle reading on specific date should match expected reading - nursery", expectedReading, actualReading);
     }
+
     /**@Test
     public void testAddProduce() {
         GreenHouseNursery nursery = new GreenHouseNursery();
