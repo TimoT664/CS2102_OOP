@@ -135,7 +135,7 @@ public class Examples {
     }
 
     // Additional tests for GreenHouseProduce class
-    // BEGIN NEW TESTS
+
 
     @Before
     public void setUpNew() {
