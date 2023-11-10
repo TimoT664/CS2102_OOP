@@ -42,4 +42,15 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
         // For now, it's not implemented as it requires more context on how the data is structured
         return null;
     }
+
+    public int getSensorDataSize() {
+        return 0;
+    }
+
+    public void clearSensorData() {
+    }
+
+    public int getErrorReadingsCount() {
+        return 0;
+    }
 }

@@ -55,4 +55,7 @@ GreenHouseProduce extends AbsGreenHouse implements Sensible {
     public int getNumberOfReadings() {
         return 0;
     }
+
+    public void clearSensorData() {
+    }
 }
