@@ -1,74 +1,66 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
 
-    private List<Double> sensorData;
-
-    public GreenHouseNursery() {
-        // Initialize the sensor data list
-        sensorData = new ArrayList<>();
-    }
+    private List<SuperTempHumidReading> sensorData = new ArrayList<>();
 
     @Override
     public void pollSensorData(List<Double> values) {
-        // Quickly store the data, filtering out the error values (-999.0)
-        sensorData = values.stream()
-                .filter(value -> value != -999.0)
-                .collect(Collectors.toList());
+        for (int i = 0; i < values.size(); i++) {
+            double value = values.get(i);
+
+            // Check if the value is a datetime
+            if (isDateTime(value)) {
+                // Skip datetime value, expecting temperature and humidity pairs next
+                continue;
+            }
+
+            // Check for valid temperature and humidity pairs
+            if (value != -999.0 && i + 1 < values.size() && values.get(i + 1) != -999.0) {
+                double temperature = value;
+                double humidity = values.get(i + 1);
+                SuperTempHumidReading reading = new SuperTempHumidReading(temperature, humidity);
+                sensorData.add(reading);
+                i++; // Skip next value as it's part of the current pair
+            }
+        }
+
+        // Optionally process the data after adding new readings
+        // processSensorData();
     }
 
     @Override
     public TempHumidReading middleReading() {
-        // Perform the computation to find the middle reading
-        // Assuming that the sensorData list is already sorted by date and time
-        if (sensorData.isEmpty()) {
-            return null; // or throw an exception if appropriate
-        }
+        // Logic to calculate middle reading
+        // Ignore -999 values
+        return calculateMiddleReading(sensorData);
+    }
 
-        // Find the middle index for temperature and humidity
-        int middleIndex = sensorData.size() / 4; // Each reading has 2 values (temp and humidity), so we divide by 4
-        double middleTemperature = sensorData.get(middleIndex * 2);
-        double middleHumidity = sensorData.get(middleIndex * 2 + 1);
-
-        return new TempHumidReading(middleTemperature, middleHumidity);
+    private TempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
+        // Implement logic to calculate middle reading
+        return null;
     }
 
     @Override
     public TempHumidReading middleReading(double onDate) {
-        // Find the middle reading for a specific date
-        // This method will require parsing the date and finding the corresponding readings
-        // For now, it's not implemented as it requires more context on how the data is structured
+        // Logic to calculate middle reading on a specific date
+        // Ignore -999 values
+        return calculateMiddleReadingOnDate(sensorData, onDate);
+    }
+
+    private TempHumidReading calculateMiddleReadingOnDate(List<SuperTempHumidReading> sensorData, double onDate) {
+        // Implement logic to calculate middle reading on specific date
         return null;
     }
 
-    public int getSensorDataSize() {
-        return 0;
+    /**
+     * @param values
+     */
+    @Override
+    public void pollSensorData1(List<Double> values) {
+
     }
 
-    public void clearSensorData() {
-    }
-
-    public int getErrorReadingsCount() {
-        return 0;
-    }
-
-    public void addProduce(GreenHouseProduce produce) {
-    }
-
-    public int getProduceCount() {
-        return 0;
-    }
-
-    public void removeProduce(GreenHouseProduce produce) {
-    }
-
-    public Object getAggregateData() {
-        return null;
-    }
-
-    public SuperTempHumidReading getReadingOnDate(double specificDate) {
-        return null;
-    }
+    // Additional methods for processing sensor data...
 }

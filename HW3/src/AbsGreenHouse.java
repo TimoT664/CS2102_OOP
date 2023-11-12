@@ -44,9 +44,10 @@ public abstract class AbsGreenHouse {
   public boolean sameDate(double date1, double date2){
       return Math.abs(date1 - date2) < 0.001;
   }
- 
 
 
+    protected void process() {
+    }
 
-
+    public abstract void pollSensorData1(List<Double> values);
 }

@@ -1,61 +1,71 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class
-GreenHouseProduce extends AbsGreenHouse implements Sensible {
+public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
 
-    List<TempHumidReading> readings;
-    private TempHumidReading middleReading;
-
-    public GreenHouseProduce() {
-        // Initialize the readings list
-        readings = new ArrayList<>();
-    }
+    private List<SuperTempHumidReading> sensorData = new ArrayList<>();
 
     @Override
     public void pollSensorData(List<Double> values) {
-        // Perform the computation to parse and clean the data
-        readings.clear(); // Clear previous readings
-        List<Double> cleanedData = values.stream()
-                .filter(value -> value != -999.0)
-                .collect(Collectors.toList());
+        for (int i = 0; i < values.size(); i++) {
+            double value = values.get(i);
 
-        // Assuming the cleanedData list is in the format: date, temp, humidity, temp, humidity, ...
-        for (int i = 0; i < cleanedData.size(); i += 3) {
-            double temperature = cleanedData.get(i + 1);
-            double humidity = cleanedData.get(i + 2);
-            readings.add(new TempHumidReading(temperature, humidity));
+            // Check if the value is a datetime
+            if (isDateTime(value)) {
+                // Skip datetime value, expecting temperature and humidity pairs next
+                continue;
+            }
+
+            // Check for valid temperature and humidity pairs
+            if (value != -999.0 && i + 1 < values.size() && values.get(i + 1) != -999.0) {
+                double temperature = value;
+                double humidity = values.get(i + 1);
+                SuperTempHumidReading reading = new SuperTempHumidReading(temperature, humidity);
+                sensorData.add(reading);
+                i++; // Skip next value as it's part of the current pair
+            }
         }
 
-        // Compute and store the middle reading for fast retrieval
-        if (!readings.isEmpty()) {
-            int middleIndex = readings.size() / 2;
-            middleReading = readings.get(middleIndex);
-        }
+        // Optionally process the data after adding new readings
+        // processSensorData();
+    }
+
+    private void processSensorData() {
+        // Real-time processing logic
+        // Implement the logic to process sensor data
     }
 
     @Override
     public TempHumidReading middleReading() {
-        // Return the precomputed middle reading
-        return middleReading;
+        // Fast retrieval logic for middle reading
+        // Ignore -999 values
+        return calculateMiddleReading(sensorData);
+    }
+
+    private TempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
+        // Implement logic to calculate middle reading
+        return null; // Placeholder for your implementation
     }
 
     @Override
     public TempHumidReading middleReading(double onDate) {
-        // This method would require additional logic to find the reading for a specific date
-        // For now, it's not implemented as it requires more context on how the data is structured
-        return null;
+        // Fast retrieval logic for middle reading on a specific date
+        // Ignore -999 values
+        return calculateMiddleReadingOnDate(sensorData, onDate);
     }
 
-    public int getSensorDataSize() {
-        return 0;
+    private TempHumidReading calculateMiddleReadingOnDate(List<SuperTempHumidReading> sensorData, double onDate) {
+        // Implement logic to calculate middle reading on specific date
+        return null; // Placeholder for your implementation
     }
 
-    public int getNumberOfReadings() {
-        return 0;
+    /**
+     * @param values
+     */
+    @Override
+    public void pollSensorData1(List<Double> values) {
+
     }
 
-    public void clearSensorData() {
-    }
+    // Additional methods for processing sensor data...
 }
