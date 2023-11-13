@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
+public class GreenHouseProduce extends AbsGreenHouse1 implements Sensible {
 
-    private List<SuperTempHumidReading> sensorData = new ArrayList<>();
+    private List<SuperTempHumidReading1> sensorData = new ArrayList<>();
 
     @Override
     public void pollSensorData(List<Double> values) {
@@ -20,7 +20,7 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
             if (value != -999.0 && i + 1 < values.size() && values.get(i + 1) != -999.0) {
                 double temperature = value;
                 double humidity = values.get(i + 1);
-                SuperTempHumidReading reading = new SuperTempHumidReading(temperature, humidity);
+                SuperTempHumidReading1 reading = new SuperTempHumidReading1(temperature, humidity);
                 sensorData.add(reading);
                 i++; // Skip next value as it's part of the current pair
             }
@@ -42,7 +42,7 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
         return calculateMiddleReading(sensorData);
     }
 
-    private TempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
+    private TempHumidReading calculateMiddleReading(List<SuperTempHumidReading1> sensorData) {
         // Implement logic to calculate middle reading
         return null; // Placeholder for your implementation
     }
@@ -54,7 +54,7 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
         return calculateMiddleReadingOnDate(sensorData, onDate);
     }
 
-    private TempHumidReading calculateMiddleReadingOnDate(List<SuperTempHumidReading> sensorData, double onDate) {
+    private TempHumidReading calculateMiddleReadingOnDate(List<SuperTempHumidReading1> sensorData, double onDate) {
         // Implement logic to calculate middle reading on specific date
         return null; // Placeholder for your implementation
     }

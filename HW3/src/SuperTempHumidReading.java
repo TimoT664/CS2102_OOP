@@ -9,14 +9,14 @@ public class SuperTempHumidReading extends TempHumidReading {
     }
 
     public SuperTempHumidReading(TempHumidReading other) {
-        super(other.getTemperature(), other.getHumidity());
+        super(other.temperature, other.humidity);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        SuperTempHumidReading that = (SuperTempHumidReading) obj;
+        SuperTempHumidReading1 that = (SuperTempHumidReading1) obj;
         return Math.abs(temperature - that.temperature) < 0.001 &&
                 Math.abs(humidity - that.humidity) < 0.001;
     }
