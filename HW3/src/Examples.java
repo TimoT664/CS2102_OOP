@@ -25,73 +25,73 @@ public class Examples {
 
     @Test
     public void testSCorrectValues() {
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(98.6, 33.4);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(98.6, 33.4);
         assertEquals("{98.6F;33.4%}", sthr.toString());
     }
 
     @Test
     public void testSWrongTemperature() {
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(-999, 33.4);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(-999, 33.4);
         assertEquals("{Err;33.4%}", sthr.toString());
     }
 
     @Test
     public void testWrongValues() {
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(-999, -999);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(-999, -999);
         assertEquals("{Err;Err}", sthr.toString());
     }
 
     @Test
     public void tesWrongHumidity() {
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(98.6, -999);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(98.6, -999);
         assertEquals("{98.6F;Err}", sthr.toString());
     }
 
     @Test
     public void testDtoWrongHumidity() {
         TempHumidReading thr = new TempHumidReading(98.6, -999);
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(thr);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(thr);
         assertEquals("{98.6F;Err}", sthr.toString());
     }
 
     @Test
     public void testDtoWrongTemperatur() {
         TempHumidReading thr = new TempHumidReading(-999, 33.4);
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(thr);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(thr);
         assertEquals("{Err;33.4%}", sthr.toString());
     }
 
     @Test
     public void testDtoWrongVals() {
         TempHumidReading thr = new TempHumidReading(-999, -999);
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(thr);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(thr);
         assertEquals("{Err;Err}", sthr.toString());
     }
 
     @Test
     public void testEquals() {
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(12.2, 13.3);
-        SuperTempHumidReading1 sthr1 = new SuperTempHumidReading1(12.2, 13.3);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(12.2, 13.3);
+        SuperTempHumidReading2 sthr1 = new SuperTempHumidReading2(12.2, 13.3);
         assertEquals(true, sthr.equals(sthr1));
     }
 
     @Test
     public void testEqualsWithDifferentObject() {
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(12.2, 13.3);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(12.2, 13.3);
         String notATempHumidReading = "I am not a SuperTempHumidReading";
         assertFalse(sthr.equals(notATempHumidReading));
     }
 
     @Test
     public void testNotEquals() {
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1(12.2, 13.0);
-        SuperTempHumidReading1 sthr1 = new SuperTempHumidReading1(12.2, 13.3);
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2(12.2, 13.0);
+        SuperTempHumidReading2 sthr1 = new SuperTempHumidReading2(12.2, 13.3);
         assertEquals(false, sthr.equals(sthr1));
     }
 
     @Test
     public void testDefaultReading() {
-        SuperTempHumidReading1 sthr = new SuperTempHumidReading1();
+        SuperTempHumidReading2 sthr = new SuperTempHumidReading2();
         assertEquals("{Err;Err}", sthr.toString());
     }
 
@@ -99,7 +99,7 @@ public class Examples {
     public void testMediumReadingsNursery() {
         GreenHouseNursery green = new GreenHouseNursery();
         green.pollSensorData(values);
-        assertEquals(new SuperTempHumidReading1(35.5, 31.0), green.middleReading());
+        assertEquals(new SuperTempHumidReading2(35.5, 31.0), green.middleReading());
     }
 
     @Test
@@ -107,7 +107,7 @@ public class Examples {
         GreenHouseNursery green = new GreenHouseNursery();
         green.pollSensorData(values);
         double onDate = 20231106010101.0;
-        assertEquals(new SuperTempHumidReading1(-999, -999), green.middleReading(onDate));
+        assertEquals(new SuperTempHumidReading2(-999, -999), green.middleReading(onDate));
     }
 
     @Test
@@ -115,13 +115,13 @@ public class Examples {
         GreenHouseProduce prod = new GreenHouseProduce();
         prod.pollSensorData(values);
         double onDate = 20231106010101.0;
-        assertEquals(new SuperTempHumidReading1(-999, -999), prod.middleReading(onDate));
+        assertEquals(new SuperTempHumidReading2(-999, -999), prod.middleReading(onDate));
     }
 
     public void testEmptyListNursery() {
         GreenHouseNursery green = new GreenHouseNursery();
         green.pollSensorData(new LinkedList<Double>());
-        assertEquals(new SuperTempHumidReading1(-999, -999), green.middleReading());
+        assertEquals(new SuperTempHumidReading2(-999, -999), green.middleReading());
     }
 
     @Test
@@ -187,7 +187,7 @@ public class Examples {
     @Test
     public void testMiddleReadingWithNoDataNew() {
         GreenHouseProduce producer = new GreenHouseProduce();
-        SuperTempHumidReading1 temp = new SuperTempHumidReading1();
+        SuperTempHumidReading temp = new SuperTempHumidReading();
 
         assertEquals("Middle reading should be -999s when no data is present", temp, producer.middleReading());
     }
@@ -196,8 +196,8 @@ public class Examples {
     public void testMiddleReadingWithDataNew() {
         GreenHouseProduce producer = new GreenHouseProduce();
         producer.pollSensorData(sensorData);
-        SuperTempHumidReading1 expectedReading = new SuperTempHumidReading1(35.5, 31.0);
-        SuperTempHumidReading1 actualReading = (SuperTempHumidReading1) producer.middleReading();
+        SuperTempHumidReading2 expectedReading = new SuperTempHumidReading2(35.5, 31.0);
+        SuperTempHumidReading2 actualReading = (SuperTempHumidReading2) producer.middleReading();
         assertEquals("Middle reading should match expected reading - produce", expectedReading, actualReading);
     }
 
@@ -206,8 +206,8 @@ public class Examples {
         GreenHouseNursery greenHouseNursery = new GreenHouseNursery();
         greenHouseNursery.pollSensorData(sensorData);
         double onDate = 20231106010101.0;
-        SuperTempHumidReading1 expectedReading = new SuperTempHumidReading1(/* Expected values for this date */);
-        SuperTempHumidReading1 actualReading = (SuperTempHumidReading1) greenHouseNursery.middleReading(onDate);
+        SuperTempHumidReading expectedReading = new SuperTempHumidReading(/* Expected values for this date */);
+        SuperTempHumidReading actualReading = (SuperTempHumidReading) greenHouseNursery.middleReading(onDate);
         assertEquals("Middle reading on specific date should match expected reading - nursery", expectedReading, actualReading);
     }
 

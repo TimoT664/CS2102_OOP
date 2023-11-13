@@ -1,71 +1,81 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class GreenHouseProduce extends AbsGreenHouse1 implements Sensible {
+public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
 
-    private List<SuperTempHumidReading1> sensorData = new ArrayList<>();
+    public int sensorDataSize;
+    public int numberOfReadings;
+    private List<SuperTempHumidReading> sensorData = new ArrayList<>();
+    private TempHumidReading cachedMiddleReading;
+
+    // No-argument constructor
+    public GreenHouseProduce() {
+        // Initialization logic if required
+    }
 
     @Override
     public void pollSensorData(List<Double> values) {
-        for (int i = 0; i < values.size(); i++) {
-            double value = values.get(i);
-
-            // Check if the value is a datetime
-            if (isDateTime(value)) {
-                // Skip datetime value, expecting temperature and humidity pairs next
-                continue;
+        for (int i = 0; i < values.size(); i += 3) {
+            if (i + 2 >= values.size()) {
+                break;
             }
 
-            // Check for valid temperature and humidity pairs
-            if (value != -999.0 && i + 1 < values.size() && values.get(i + 1) != -999.0) {
-                double temperature = value;
-                double humidity = values.get(i + 1);
-                SuperTempHumidReading1 reading = new SuperTempHumidReading1(temperature, humidity);
+            double dateTime = values.get(i);
+            double temperature = values.get(i + 1);
+            double humidity = values.get(i + 2);
+
+            // Skip error values
+            if (temperature != -999.0 && humidity != -999.0) {
+                SuperTempHumidReading reading = new SuperTempHumidReading(temperature, humidity);
                 sensorData.add(reading);
-                i++; // Skip next value as it's part of the current pair
             }
         }
 
-        // Optionally process the data after adding new readings
-        // processSensorData();
-    }
-
-    private void processSensorData() {
-        // Real-time processing logic
-        // Implement the logic to process sensor data
+        // Update cached middle reading after new data is polled
+        cachedMiddleReading = calculateMiddleReading(sensorData);
     }
 
     @Override
     public TempHumidReading middleReading() {
-        // Fast retrieval logic for middle reading
-        // Ignore -999 values
-        return calculateMiddleReading(sensorData);
+        if (cachedMiddleReading == null) {
+            return new TempHumidReading(-999, -999);
+        }
+        return cachedMiddleReading;
     }
 
-    private TempHumidReading calculateMiddleReading(List<SuperTempHumidReading1> sensorData) {
-        // Implement logic to calculate middle reading
-        return null; // Placeholder for your implementation
+    private TempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
+        List<Double> temperatures = sensorData.stream()
+                .filter(reading -> reading.temperature != -999)
+                .map(reading -> reading.temperature)
+                .sorted()
+                .collect(Collectors.toList());
+
+        List<Double> humidities = sensorData.stream()
+                .filter(reading -> reading.humidity != -999)
+                .map(reading -> reading.humidity)
+                .sorted()
+                .collect(Collectors.toList());
+
+        double middleTemperature = getMiddleValue(temperatures);
+        double middleHumidity = getMiddleValue(humidities);
+
+        return new TempHumidReading(middleTemperature, middleHumidity);
+    }
+
+    private double getMiddleValue(List<Double> values) {
+        if (values.isEmpty()) return -999;
+        int middleIndex = values.size() / 2;
+        return values.get(middleIndex);
     }
 
     @Override
     public TempHumidReading middleReading(double onDate) {
-        // Fast retrieval logic for middle reading on a specific date
-        // Ignore -999 values
-        return calculateMiddleReadingOnDate(sensorData, onDate);
-    }
-
-    private TempHumidReading calculateMiddleReadingOnDate(List<SuperTempHumidReading1> sensorData, double onDate) {
-        // Implement logic to calculate middle reading on specific date
-        return null; // Placeholder for your implementation
-    }
-
-    /**
-     * @param values
-     */
-    @Override
-    public void pollSensorData1(List<Double> values) {
-
+        // Implementation for date-specific middle reading
+        return null;
     }
 
     // Additional methods for processing sensor data...
 }
+
+// Rest of the classes (Sensible1, TempHumidReading1, SuperTempHumidReading1, AbsGreenHouse1) remain the same

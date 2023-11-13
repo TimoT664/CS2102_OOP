@@ -13,27 +13,27 @@ public abstract class AbsGreenHouse {
      * @param sensorDatum the datum which may be a date, datetime, temperature, or humidity
      * @return true if it is a formatted date number
      */
-  public boolean isDate(double sensorDatum){
-      return sensorDatum > 19700101.0;
-  }
+    public boolean isDate(double sensorDatum){
+        return sensorDatum > 19700101.0;
+    }
 
     /**
      * Assume a sensor value is a date if it is greater jan 01, 1970 00:00:00 represented as a double
      * @param sensorDatum the datum which may be a date, datetime, temperature, or humidity
      * @return true if it is a formatted date number
      */
-  public boolean isDateTime(double sensorDatum){
-      return sensorDatum > 19700101000000.0;
-  }
+    public boolean isDateTime(double sensorDatum){
+        return sensorDatum > 19700101000000.0;
+    }
 
     /**
      * Converts the double date time format to just the date part by dividing and rounding
      * @param dateTime YYYYMMDDhhmmss.0
      * @return YYYYMMDD.0
      */
-  public double toDate(double dateTime){
-      return Math.floor(dateTime / 1000000.0); // convert YYYYMMDDhhmmss -> YYYYMMDD
-  }
+    public double toDate(double dateTime){
+        return Math.floor(dateTime / 1000000.0); // convert YYYYMMDDhhmmss -> YYYYMMDD
+    }
 
     /**
      * compares two YYYYMMDD.0 for equality
@@ -41,13 +41,11 @@ public abstract class AbsGreenHouse {
      * @param date2 another YYYYMMDD.0
      * @return true if they are within some error tolerance (0.001) of each other
      */
-  public boolean sameDate(double date1, double date2){
-      return Math.abs(date1 - date2) < 0.001;
-  }
+    public boolean sameDate(double date1, double date2){
+        return Math.abs(date1 - date2) < 0.001;
+    }
 
 
     protected void process() {
     }
-
-    public abstract void pollSensorData1(List<Double> values);
 }
