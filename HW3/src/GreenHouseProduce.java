@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,14 +48,14 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
             //cachedMiddleReading = calculateMiddleReading(sensorData);
         }
         /*** ONLY FOR TESTING ***/
-      /*  int i = 0;
+        int i = 0;
         for (SuperTempHumidReading sd : sensorData){
             System.out.println(sd.toString() + "date: " + sd.getDate());
             i++;
-            if (i == 5 ){
+            if (i == 20 ){
                 break;
             }
-        }*/
+        }
         /*** END TESTING ***/
     }
 
@@ -73,7 +74,20 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
                 .collect(Collectors.toList());
 
         if (filteredData.isEmpty()) {
-            return new SuperTempHumidReading(-999, -999); // Error values
+
+            /*** REMOVE FOR CORRECT SOLUTION **/
+            filteredData = sensorData.stream()
+                    .filter(reading -> reading.getDate() == -1)
+                    .collect(Collectors.toList());
+            if(filteredData.isEmpty()){
+                return new SuperTempHumidReading(-999, -999); // Error values
+            }
+            else{
+                return filteredData.stream().max(Comparator.comparing(f -> f.temperature)).get();
+            }
+            /** END REMOCE**/
+
+            //return new SuperTempHumidReading(-999, -999); // Error values
         }
 
         return calculateMiddleReading(filteredData);
