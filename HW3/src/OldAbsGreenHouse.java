@@ -1,13 +1,10 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * An abstract superclass to provide template methods for performance specific subclasses.
  */
-public abstract class AbsGreenHouse {
+public abstract class OldAbsGreenHouse {
 
     // GIVEN CODE
 
@@ -52,9 +49,9 @@ public abstract class AbsGreenHouse {
     /**
      * Calculates the middle reading of temperature and humidity from sensor data.
      * @param sensorData a list of sensor readings containing temperature and humidity
-     * @return SuperTempHumidReading object representing the middle temperature and humidity
+     * @return OldSuperOldTempHumidReading object representing the middle temperature and humidity
      */
-    protected SuperTempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
+    protected OldSuperOldTempHumidReading calculateMiddleReading(List<OldSuperOldTempHumidReading> sensorData) {
         // Extract temperatures and humidities, sort them, and calculate middle values
         List<Double> temperatures = sensorData.stream()
                 .filter(reading -> reading.temperature != -999)
@@ -71,8 +68,8 @@ public abstract class AbsGreenHouse {
         double middleTemperature = getMiddleValue(temperatures);
         double middleHumidity = getMiddleValue(humidities);
 
-        // Create and return a SuperTempHumidReading object with middle values
-        SuperTempHumidReading result = new SuperTempHumidReading(middleTemperature, middleHumidity);
+        // Create and return a OldSuperOldTempHumidReading object with middle values
+        OldSuperOldTempHumidReading result = new OldSuperOldTempHumidReading(middleTemperature, middleHumidity);
         //System.out.println("DEBUG: Returning " + result); // Debug print
         return result;
     }
@@ -90,11 +87,11 @@ public abstract class AbsGreenHouse {
 
     /**
      * Checks if the reading's date matches the specified date.
-     * @param reading SuperTempHumidReading object containing date, temperature, and humidity
+     * @param reading OldSuperOldTempHumidReading object containing date, temperature, and humidity
      * @param onDate specified date in YYYYMMDD.0 format
      * @return true if the reading's date matches the specified date
      */
-    protected boolean matchesDate(SuperTempHumidReading reading, double onDate) {
+    protected boolean matchesDate(OldSuperOldTempHumidReading reading, double onDate) {
         double readingDate = reading.getDate();
         if (isDate(onDate) && readingDate == onDate) {
             return true;

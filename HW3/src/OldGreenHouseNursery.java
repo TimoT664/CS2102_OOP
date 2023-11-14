@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
-    private List<SuperTempHumidReading> sensorData = new ArrayList<>();
+public class OldGreenHouseNursery extends OldAbsGreenHouse implements OldSensible {
+    private List<OldSuperOldTempHumidReading> sensorData = new ArrayList<>();
 
     @Override
     public void pollSensorData(List<Double> values) {
@@ -31,14 +30,14 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
                 humidity = values.get(i + 1);
                 i = i + 1;
             }
-            // Create SuperTempHumidReading object and add it to sensorData list
-            SuperTempHumidReading reading = new SuperTempHumidReading(temperature, humidity, toDate(savedDateTime));
+            // Create OldSuperOldTempHumidReading object and add it to sensorData list
+            OldSuperOldTempHumidReading reading = new OldSuperOldTempHumidReading(temperature, humidity, toDate(savedDateTime));
             sensorData.add(reading);
         }
 
         // Code below is for testing purposes to print sensor data (can be removed in production)
         /*int i = 0;
-        for (SuperTempHumidReading sd : sensorData){
+        for (OldSuperOldTempHumidReading sd : sensorData){
             System.out.println(sd.toString() + "date: " + sd.getDate());
             i++;
             if (i == 30 ){
@@ -49,19 +48,19 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
     }
 
     @Override
-    public TempHumidReading middleReading() {
+    public OldTempHumidReading middleReading() {
         return calculateMiddleReading(sensorData);
     }
 
     @Override
-    public SuperTempHumidReading middleReading(double onDate) {
+    public OldSuperOldTempHumidReading middleReading(double onDate) {
         // Filter sensorData for readings matching the specified date
-        List<SuperTempHumidReading> filteredData = sensorData.stream()
+        List<OldSuperOldTempHumidReading> filteredData = sensorData.stream()
                 .filter(reading -> matchesDate(reading, onDate))
                 .collect(Collectors.toList());
 
         if (filteredData.isEmpty()) {
-            return new SuperTempHumidReading(-999, -999); // Return error values if no data matches
+            return new OldSuperOldTempHumidReading(-999, -999); // Return error values if no data matches
         }
 
         // Calculate and return the middle reading for the filtered data

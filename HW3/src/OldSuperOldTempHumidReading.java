@@ -1,4 +1,4 @@
-public class SuperTempHumidReading extends TempHumidReading {
+public class OldSuperOldTempHumidReading extends OldTempHumidReading {
 
     private double date;
 
@@ -7,7 +7,7 @@ public class SuperTempHumidReading extends TempHumidReading {
     /**
      * Default constructor initializing temperature, humidity, and date with default values.
      */
-    public SuperTempHumidReading() {
+    public OldSuperOldTempHumidReading() {
         super(-999, -999);
         this.date = -1;
     }
@@ -17,7 +17,7 @@ public class SuperTempHumidReading extends TempHumidReading {
      * @param temperature the temperature value
      * @param humidity the humidity value
      */
-    public SuperTempHumidReading(double temperature, double humidity) {
+    public OldSuperOldTempHumidReading(double temperature, double humidity) {
         super(temperature, humidity);
         this.date = -1;
     }
@@ -28,16 +28,16 @@ public class SuperTempHumidReading extends TempHumidReading {
      * @param humidity the humidity value
      * @param date the date value
      */
-    public SuperTempHumidReading(double temperature, double humidity, double date) {
+    public OldSuperOldTempHumidReading(double temperature, double humidity, double date) {
         super(temperature, humidity);
         this.date = date;
     }
 
     /**
-     * Constructor initializing from another TempHumidReading object and setting the date to a default value.
-     * @param other another TempHumidReading object
+     * Constructor initializing from another OldTempHumidReading object and setting the date to a default value.
+     * @param other another OldTempHumidReading object
      */
-    public SuperTempHumidReading(TempHumidReading other) {
+    public OldSuperOldTempHumidReading(OldTempHumidReading other) {
         super(other.temperature, other.humidity);
         this.date = -1;
     }
@@ -45,7 +45,7 @@ public class SuperTempHumidReading extends TempHumidReading {
     // Equals and toString methods
 
     /**
-     * Checks equality with another SuperTempHumidReading object based on temperature and humidity values.
+     * Checks equality with another OldSuperOldTempHumidReading object based on temperature and humidity values.
      * @param obj the object to compare
      * @return true if the objects are equal, false otherwise
      */
@@ -53,13 +53,13 @@ public class SuperTempHumidReading extends TempHumidReading {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        SuperTempHumidReading that = (SuperTempHumidReading) obj;
+        OldSuperOldTempHumidReading that = (OldSuperOldTempHumidReading) obj;
         return Math.abs(temperature - that.temperature) < 0.001 &&
                 Math.abs(humidity - that.humidity) < 0.001;
     }
 
     /**
-     * Generates a string representation of the SuperTempHumidReading object.
+     * Generates a string representation of the OldSuperOldTempHumidReading object.
      * @return the string representation of the object
      */
     @Override

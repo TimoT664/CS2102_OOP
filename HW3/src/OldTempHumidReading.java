@@ -1,7 +1,7 @@
 /**
  * A simple DTO for temperature and humidity sensor data
  */
-public class TempHumidReading {
+public class OldTempHumidReading {
 
     /**
      * Temperature in Fahrenheit
@@ -17,7 +17,7 @@ public class TempHumidReading {
      * @param temperature in Fahrenheit
      * @param humidity in percentage
      */
-    public TempHumidReading(double temperature, double humidity){
+    public OldTempHumidReading(double temperature, double humidity){
         this.temperature = temperature;
         this.humidity = humidity;
     }

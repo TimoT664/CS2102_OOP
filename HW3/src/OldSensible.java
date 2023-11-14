@@ -1,7 +1,7 @@
 
 import java.util.List;
 
-public interface Sensible {
+public interface OldSensible {
 
     /**
      * Reads an ordered sequence of data from the weather sensors to store in the greenhouse
@@ -23,7 +23,7 @@ public interface Sensible {
      *         and the middle humidity of the sorted humidities
      *         If there are no valid temperature or humidity values, respectively, then the resulting sensor reading should have -999 for that data
      */
-    public TempHumidReading middleReading();
+    public OldTempHumidReading middleReading();
 
     /**
      * produces a pair of the middle temperature and humidity (respectively) from the stored readings ignoring error values (-999s)
@@ -32,5 +32,5 @@ public interface Sensible {
      *         and the middle humidity of the sorted humidities
      *         If there are no valid temperature or humidity values, respectively, then the resulting sensor reading should have -999 for that data
      */
-    public TempHumidReading middleReading(double onDate);
+    public OldTempHumidReading middleReading(double onDate);
 }
