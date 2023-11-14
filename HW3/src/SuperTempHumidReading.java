@@ -1,16 +1,26 @@
 
 public class SuperTempHumidReading extends TempHumidReading {
 
+    private double date;
+
     public SuperTempHumidReading() {
         super(-999, -999);
+        this.date = -1;
     }
 
     public SuperTempHumidReading(double temperature, double humidity) {
         super(temperature, humidity);
+        this.date = -1;
+    }
+
+    public SuperTempHumidReading(double temperature, double humidity, double date) {
+        super(temperature, humidity);
+        this.date = date;
     }
 
     public SuperTempHumidReading(TempHumidReading other) {
         super(other.temperature, other.humidity);
+        this.date = -1;
     }
 
     @Override
@@ -27,5 +37,12 @@ public class SuperTempHumidReading extends TempHumidReading {
         String tempStr = (temperature == -999) ? "Err" : String.format("%,.1fF", temperature);
         String humidStr = (humidity == -999) ? "Err" : String.format("%,.1f%%", humidity);
         return "{" + tempStr + ";" + humidStr + "}";
+    }
+
+    public double getDate() {
+        return date;
+    }
+    public void setDate(double date) {
+        this.date =  date;
     }
 }

@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * An abstract superclass to provide template methods for performance specific subclasses.
@@ -46,6 +48,41 @@ public abstract class AbsGreenHouse {
     }
 
 
-    protected void process() {
+    protected SuperTempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
+        List<Double> temperatures = sensorData.stream()
+                .filter(reading -> reading.temperature != -999)
+                .map(reading -> reading.temperature)
+                .sorted()
+                .collect(Collectors.toList());
+
+        List<Double> humidities = sensorData.stream()
+                .filter(reading -> reading.humidity != -999)
+                .map(reading -> reading.humidity)
+                .sorted()
+                .collect(Collectors.toList());
+
+        double middleTemperature = getMiddleValue(temperatures);
+        double middleHumidity = getMiddleValue(humidities);
+
+        SuperTempHumidReading result = new SuperTempHumidReading(middleTemperature, middleHumidity);
+        System.out.println("DEBUG: Returning " + result); // Debug print
+        return result;
+    }
+
+    protected double getMiddleValue(List<Double> values) {
+        if (values.isEmpty()) return -999;
+        int middleIndex = values.size() / 2;
+        return values.get(middleIndex);
+    }
+
+    protected boolean matchesDate(SuperTempHumidReading reading, double onDate) {
+        // Implement the logic to check if the reading's date matches onDate
+        // This depends on how the date is represented in your data
+        double readingDate = reading.getDate();
+        if(readingDate == toDate(onDate)){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
