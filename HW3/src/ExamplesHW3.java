@@ -8,14 +8,14 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class Examples {
+public class ExamplesHW3 {
 
     LinkedList<Double> sameMonth = new LinkedList<>();
     LinkedList<Double> diffMonth = new LinkedList<>();
     LinkedList<Double> multiTimes = new LinkedList<>();
 
     LinkedList<Double> longData = new LinkedList<>();
-    public Examples(){
+    public ExamplesHW3(){
         sameMonth.addAll(List.of(20231106010101.0,45.5,34.0,46.6,40.0,20231130020202.0,22.2,20.0,35.5,30.0,-999.0,31.0,32.2,-999.0));
         diffMonth.addAll(sameMonth);
         diffMonth.addAll(List.of(20231206010101.0,45.5,34.0,46.6,40.0,20231230020202.0,22.2,20.0,35.5,30.0,-999.0,31.0,32.2,-999.0));

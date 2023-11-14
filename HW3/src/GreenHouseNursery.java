@@ -31,12 +31,12 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
                 humidity = values.get(i + 1);
                 i = i + 1;
             }
-            //if (temperature != -999.0 && humidity != -999.0) {
+            // Create SuperTempHumidReading object and add it to sensorData list
             SuperTempHumidReading reading = new SuperTempHumidReading(temperature, humidity, toDate(savedDateTime));
             sensorData.add(reading);
         }
 
-        /*** ONLY FOR TESTING ***/
+        // Code below is for testing purposes to print sensor data (can be removed in production)
         /*int i = 0;
         for (SuperTempHumidReading sd : sensorData){
             System.out.println(sd.toString() + "date: " + sd.getDate());
@@ -45,7 +45,7 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
                 break;
             }
         } */
-        /*** END TESTING ***/
+        // End of testing code
     }
 
     @Override
@@ -55,14 +55,16 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
 
     @Override
     public SuperTempHumidReading middleReading(double onDate) {
+        // Filter sensorData for readings matching the specified date
         List<SuperTempHumidReading> filteredData = sensorData.stream()
                 .filter(reading -> matchesDate(reading, onDate))
                 .collect(Collectors.toList());
 
         if (filteredData.isEmpty()) {
-            return new SuperTempHumidReading(-999, -999); // Error values
+            return new SuperTempHumidReading(-999, -999); // Return error values if no data matches
         }
 
+        // Calculate and return the middle reading for the filtered data
         return calculateMiddleReading(filteredData);
     }
 }

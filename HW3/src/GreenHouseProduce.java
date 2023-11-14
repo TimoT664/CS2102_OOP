@@ -12,9 +12,9 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
     public GreenHouseProduce() {
         // Initialization logic if required
     }
+
     @Override
     public void pollSensorData(List<Double> values) {
-
         double savedDateTime = -1;
         for (int i = 0; i < values.size(); i++) {
             double currentValue = values.get(i);
@@ -39,7 +39,7 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
                 humidity = values.get(i + 1);
                 i = i + 1;
             }
-            //if (temperature != -999.0 && humidity != -999.0) {
+            // Create SuperTempHumidReading object and add it to sensorData list
             SuperTempHumidReading reading = new SuperTempHumidReading(temperature, humidity, toDate(savedDateTime));
             sensorData.add(reading);
 
@@ -50,22 +50,22 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
 
     @Override
     public TempHumidReading middleReading() {
-        /*if (cachedMiddleReading == null) {
-            return new SuperTempHumidReading(-999, -999);
-        }*/
+        // Return the calculated middle reading based on all sensor data
         return calculateMiddleReading(sensorData);
     }
 
     @Override
     public SuperTempHumidReading middleReading(double onDate) {
+        // Filter sensorData for readings matching the specified date
         List<SuperTempHumidReading> filteredData = sensorData.stream()
                 .filter(reading -> matchesDate(reading, onDate))
                 .collect(Collectors.toList());
 
         if (filteredData.isEmpty()) {
-            return new SuperTempHumidReading(-999, -999); // Error values
+            return new SuperTempHumidReading(-999, -999); // Return error values if no data matches
         }
 
+        // Calculate and return the middle reading for the filtered data
         return calculateMiddleReading(filteredData);
     }
 }

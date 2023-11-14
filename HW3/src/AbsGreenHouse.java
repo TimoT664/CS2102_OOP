@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 public abstract class AbsGreenHouse {
 
     // GIVEN CODE
+
     /**
-     * Assume a sensor value is a date if it is greater jan 01, 1970
+     * Assume a sensor value is a date if it is greater than January 1, 1970.
      * @param sensorDatum the datum which may be a date, datetime, temperature, or humidity
      * @return true if it is a formatted date number
      */
@@ -20,7 +21,7 @@ public abstract class AbsGreenHouse {
     }
 
     /**
-     * Assume a sensor value is a date if it is greater jan 01, 1970 00:00:00 represented as a double
+     * Assume a sensor value is a date if it is greater than January 1, 1970 00:00:00 represented as a double.
      * @param sensorDatum the datum which may be a date, datetime, temperature, or humidity
      * @return true if it is a formatted date number
      */
@@ -29,7 +30,7 @@ public abstract class AbsGreenHouse {
     }
 
     /**
-     * Converts the double date time format to just the date part by dividing and rounding
+     * Converts the double date time format to just the date part by dividing and rounding.
      * @param dateTime YYYYMMDDhhmmss.0
      * @return YYYYMMDD.0
      */
@@ -38,7 +39,7 @@ public abstract class AbsGreenHouse {
     }
 
     /**
-     * compares two YYYYMMDD.0 for equality
+     * Compares two YYYYMMDD.0 for equality within some error tolerance (0.001).
      * @param date1 one YYYYMMDD.0
      * @param date2 another YYYYMMDD.0
      * @return true if they are within some error tolerance (0.001) of each other
@@ -48,7 +49,13 @@ public abstract class AbsGreenHouse {
     }
 
 
+    /**
+     * Calculates the middle reading of temperature and humidity from sensor data.
+     * @param sensorData a list of sensor readings containing temperature and humidity
+     * @return SuperTempHumidReading object representing the middle temperature and humidity
+     */
     protected SuperTempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
+        // Extract temperatures and humidities, sort them, and calculate middle values
         List<Double> temperatures = sensorData.stream()
                 .filter(reading -> reading.temperature != -999)
                 .map(reading -> reading.temperature)
@@ -64,24 +71,34 @@ public abstract class AbsGreenHouse {
         double middleTemperature = getMiddleValue(temperatures);
         double middleHumidity = getMiddleValue(humidities);
 
+        // Create and return a SuperTempHumidReading object with middle values
         SuperTempHumidReading result = new SuperTempHumidReading(middleTemperature, middleHumidity);
         //System.out.println("DEBUG: Returning " + result); // Debug print
         return result;
     }
 
+    /**
+     * Gets the middle value from a list of doubles.
+     * @param values list of double values
+     * @return middle value from the list or -999 if the list is empty
+     */
     protected double getMiddleValue(List<Double> values) {
         if (values.isEmpty()) return -999;
         int middleIndex = values.size() / 2;
         return values.get(middleIndex);
     }
 
+    /**
+     * Checks if the reading's date matches the specified date.
+     * @param reading SuperTempHumidReading object containing date, temperature, and humidity
+     * @param onDate specified date in YYYYMMDD.0 format
+     * @return true if the reading's date matches the specified date
+     */
     protected boolean matchesDate(SuperTempHumidReading reading, double onDate) {
-        // Implement the logic to check if the reading's date matches onDate
-        // This depends on how the date is represented in your data
         double readingDate = reading.getDate();
-        if(isDate(onDate) && readingDate == onDate) {
+        if (isDate(onDate) && readingDate == onDate) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
