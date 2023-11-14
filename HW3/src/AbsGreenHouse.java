@@ -79,6 +79,8 @@ public abstract class AbsGreenHouse {
         // Implement the logic to check if the reading's date matches onDate
         // This depends on how the date is represented in your data
         double readingDate = reading.getDate();
+        onDate = onDate/Math.pow(10, 6);
+        onDate = Math.floor(onDate);
         if(readingDate == toDate(onDate)){
             return true;
         }else {
