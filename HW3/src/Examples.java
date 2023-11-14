@@ -9,20 +9,61 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class Examples {
-    List<Double> values;
-    LinkedList<Double> data;
-    GreenHouseProduce greenHouseProduce;
-    List<Double> sensorData;
 
-    public Examples() {
-        data = new LinkedList<>();
-        data.add(20231106010101.0);
-        for (int i = 0; i < 10000; i++) {
-            data.add((double) (i % 50) * 2);
-        }
-       //values = List.of(20231106010101.0, 45.5, 34.0, 46.6, 40.0, 20231130020202.0, 22.2, 20.0, 35.5, 30.0, -999.0, 31.0, 32.2, -999.0);
-        //values = List.of(20231106010101.0, 46.0, 34.0, 20231106010101.0, 44.0, 34.0, 46.6, 40.0, 20231130020202.0, 22.2, 20.0, 35.5, 30.0, -999.0, 31.0, 32.2, -999.0);
-       values = List.of(45.5,34.0, 20231106010101.0,40.0,202.0, 20.0,35.5);
+    LinkedList<Double> sameMonth = new LinkedList<>();
+    LinkedList<Double> diffMonth = new LinkedList<>();
+    LinkedList<Double> multiTimes = new LinkedList<>();
+
+    LinkedList<Double> longData = new LinkedList<>();
+    public Examples(){
+        sameMonth.addAll(List.of(20231106010101.0,45.5,34.0,46.6,40.0,20231130020202.0,22.2,20.0,35.5,30.0,-999.0,31.0,32.2,-999.0));
+        diffMonth.addAll(sameMonth);
+        diffMonth.addAll(List.of(20231206010101.0,45.5,34.0,46.6,40.0,20231230020202.0,22.2,20.0,35.5,30.0,-999.0,31.0,32.2,-999.0));
+        multiTimes.addAll(List.of(20231110010101.0,1.1,1.1,2.2,2.2,3.3,3.3,4.4,4.4,
+                20231110020202.0,9.9,9.9,8.8,8.8,7.7,7.7,6.6,6.6,5.5,5.5));
+    }
+
+
+    @Test
+    public void testGreenHouseNurseryDiffMonth2(){
+        Sensible ghn = new GreenHouseNursery();
+        ghn.pollSensorData(diffMonth);
+        assertEquals(new SuperTempHumidReading(32.2,30.0), ghn.middleReading(20231230.0));
+    }
+
+    @Test
+    public void testGreenHouseProduceDiffMonth2(){
+        Sensible ghp = new GreenHouseProduce();
+        ghp.pollSensorData(diffMonth);
+        assertEquals(new SuperTempHumidReading(32.2,30.0), ghp.middleReading(20231230.0));
+    }
+
+    @Test
+    public void nurseryMultipleDatetimesForSameDate(){
+        Sensible ghn = new GreenHouseNursery();
+        ghn.pollSensorData(multiTimes);
+        assertEquals(new SuperTempHumidReading(5.5,5.5),ghn.middleReading(20231110));
+    }
+
+    @Test
+    public void produceMultipleDatetimesForSameDate(){
+        Sensible gh = new GreenHouseProduce();
+        gh.pollSensorData(multiTimes);
+        assertEquals(new SuperTempHumidReading(5.5,5.5),gh.middleReading(20231110));
+    }
+
+    /*
+    @Test
+    public void testDate() {
+        GreenHouseNursery greenHouseNursery = new GreenHouseNursery();
+        greenHouseNursery.pollSensorData(values);
+        double onDate = 20231106010101.0;
+        double date = greenHouseNursery.toDate(onDate);
+        System.out.println(date);
+        onDate = onDate/Math.pow(10, 6);
+        onDate = Math.floor(onDate);
+        System.out.println(onDate);
+        //assertEquals("Middle reading on specific date should match expected reading - nursery", expectedReading, actualReading);
     }
 
     @Test

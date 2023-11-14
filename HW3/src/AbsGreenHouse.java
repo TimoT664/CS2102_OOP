@@ -65,7 +65,7 @@ public abstract class AbsGreenHouse {
         double middleHumidity = getMiddleValue(humidities);
 
         SuperTempHumidReading result = new SuperTempHumidReading(middleTemperature, middleHumidity);
-        System.out.println("DEBUG: Returning " + result); // Debug print
+        //System.out.println("DEBUG: Returning " + result); // Debug print
         return result;
     }
 
@@ -79,9 +79,7 @@ public abstract class AbsGreenHouse {
         // Implement the logic to check if the reading's date matches onDate
         // This depends on how the date is represented in your data
         double readingDate = reading.getDate();
-        onDate = onDate/Math.pow(10, 6);
-        onDate = Math.floor(onDate);
-        if(readingDate == toDate(onDate)){
+        if(isDate(onDate) && readingDate == onDate) {
             return true;
         }else {
             return false;
