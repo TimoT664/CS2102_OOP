@@ -15,6 +15,10 @@ public abstract class AbsGreenHouse {
         this.calendar = (GregorianCalendar) calendar.clone();
     }
 
+    public AbsGreenHouse() {
+        this.calendar = new GregorianCalendar();
+    }
+
     // Method to process sensor data
     public void pollSensorData(List<Double> sensorData) {
         for (Double data : sensorData) {

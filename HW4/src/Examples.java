@@ -242,10 +242,10 @@ public class Examples {
     }
 
     //test for bug 1
-    /**@Test
+    @Test
     public void testAbsGreenHouseIgnoresOldData() {
     GregorianCalendar calendar = new GregorianCalendar(2023, Calendar.NOVEMBER, 13);
-    GreenHouseProduce ghp = new GreenHouseProduce();
+    GreenHouseProduce ghp = new GreenHouseProduce(calendar);
     List<Double> testData = new ArrayList<>();
     calendar.add(Calendar.DAY_OF_YEAR, -2);
     testData.addAll(Arrays.asList(20231111010101.0, 20.0, 20.0));
@@ -255,10 +255,22 @@ public class Examples {
     SuperTempHumidReading expectedReading = new SuperTempHumidReading(40.0, 40.0);
 
     // Assuming getMiddleReading returns the latest valid reading
-    SuperTempHumidReading actualReading = ghp.getMiddleReading();
+    //SuperTempHumidReading actualReading = ghp.middleReading();
 
-    assertEquals(new SuperTempHumidReading(20.0, 20.0),ghp.middleReading());
-    }*/
+    assertEquals(new SuperTempHumidReading(40.0, 40.0),ghp.middleReading());
+    }
+    @Test
+        public void testPercentError() {
+        GregorianCalendar calendar = new GregorianCalendar(2023, Calendar.NOVEMBER, 13);
+        GreenHouseProduce ghp = new GreenHouseProduce(calendar);
+
+        List<Double> testData = Arrays.asList(20231113010101.0, -999.0, 25.0, -999.0, 30.0);
+        ghp.pollSensorData(testData);
+        double expectedErrorPercent = 50.0;
+        double actualErrorPercent = ghp.percentError();
+            // Assert that the calculated error percent matches the expected value
+        assertEquals(expectedErrorPercent, actualErrorPercent, 0.01); // Using a delta for floating point comparison
+        }
 
 
 }

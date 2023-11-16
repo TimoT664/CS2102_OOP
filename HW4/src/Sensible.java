@@ -34,5 +34,5 @@ public interface Sensible {
      */
     public TempHumidReading middleReading(double onDate);
 
-    Object getReading();
+
 }

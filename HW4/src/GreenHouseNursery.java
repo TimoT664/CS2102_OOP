@@ -5,10 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
+public class GreenHouseNursery extends AbsGreenHouse implements Sensible, QualityControlable {
 
     public GreenHouseNursery() {
-
+        super();
     }
 
     public LinkedList<Double> data = new LinkedList<>();

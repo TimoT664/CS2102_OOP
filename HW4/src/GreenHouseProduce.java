@@ -1,15 +1,20 @@
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
+public class GreenHouseProduce extends AbsGreenHouse implements Sensible, QualityControlable {
 
     private List<SuperTempHumidReading> sensorData = new ArrayList<>();
     private SuperTempHumidReading cachedMiddleReading;
 
     // No-argument constructor
-    public GreenHouseProduce() {
+    public GreenHouseProduce(GregorianCalendar calendar) {
         // Initialization logic if required
+        super(calendar);
+    }
+    public GreenHouseProduce() {
+        super();
     }
 
     @Override
@@ -70,5 +75,15 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
 
     public SuperTempHumidReading getMiddleReading() {
         return null;
+    }
+
+    /**
+     * computes the current percentage of non-datetime sensor values that are -999.0s
+     *
+     * @return a percent value between 0.0 and 100.0 inclusive
+     */
+    @Override
+    public double percentError() {
+        return 0;
     }
 }
