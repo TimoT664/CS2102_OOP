@@ -1,8 +1,24 @@
+import java.time.DateTimeException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
+
+    public GreenHouseNursery() {
+
+    }
+
+    public LinkedList<Double> data = new LinkedList<>();
+
+
+    public GreenHouseNursery(GregorianCalendar calendar) {
+        super(calendar);
+        //code
+    }
+
     private List<SuperTempHumidReading> sensorData = new ArrayList<>();
 
     @Override
@@ -65,5 +81,15 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible {
 
         // Calculate and return the middle reading for the filtered data
         return calculateMiddleReading(filteredData);
+    }
+
+    /**
+     * computes the current percentage of non-datetime sensor values that are -999.0s
+     *
+     * @return a percent value between 0.0 and 100.0 inclusive
+     */
+    @Override
+    public double percentError() {
+        return 0;
     }
 }

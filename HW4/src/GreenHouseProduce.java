@@ -67,4 +67,8 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible {
         // Calculate and return the middle reading for the filtered data
         return calculateMiddleReading(filteredData);
     }
+
+    public SuperTempHumidReading getMiddleReading() {
+        return null;
+    }
 }

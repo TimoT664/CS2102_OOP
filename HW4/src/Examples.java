@@ -6,11 +6,23 @@ import java.util.*;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 
+
 public class Examples {
     List<Double> values;
     LinkedList<Double> data;
     GreenHouseProduce greenHouseProduce;
     List<Double> sensorData;
+
+
+    @Before
+    public void setUp() {
+        // Initialize shared resources here
+        GregorianCalendar calendar2 = new GregorianCalendar(2023, Calendar.NOVEMBER, 13);
+        List<Object> diffMonth = Arrays.asList(/* Values for diffMonth */);
+        double temperature = 35.5;
+        // Example initialization
+    }
+
 
 
     public Examples(){
@@ -24,7 +36,6 @@ public class Examples {
         }
         values = List.of(20231106010101.0, 45.5, 34.0, 46.6, 40.0, 20231130020202.0, 22.2, 20.0, 35.5, 30.0, -999.0, 31.0, 32.2, -999.0);
     }
-
 
     @Test
     public void testGreenHouseNurseryDiffMonth2(){
@@ -219,6 +230,37 @@ public class Examples {
         SuperTempHumidReading actualReading = (SuperTempHumidReading) greenHouseNursery.middleReading(onDate);
         assertEquals("Middle reading on specific date should match expected reading - nursery", expectedReading, actualReading);
     }
+    //new test example added by TA
+    @Test
+    public void testCloneCalendar() {
+        GregorianCalendar calendar2 = new GregorianCalendar(2010, Calendar.NOVEMBER, 1);
+        GreenHouseProduce ghp = new GreenHouseProduce(calendar2);
+        calendar2.add(Calendar.YEAR, 10);
+        List<Double> dataToAdd = List.of(20151115111111.0, 40.0, 40.0);
+        ghp.pollSensorData(dataToAdd);
+        assertEquals(new SuperTempHumidReading(40.0, 40.0),ghp.middleReading());
+    }
+
+    //test for bug 1
+    /**@Test
+    public void testAbsGreenHouseIgnoresOldData() {
+    GregorianCalendar calendar = new GregorianCalendar(2023, Calendar.NOVEMBER, 13);
+    GreenHouseProduce ghp = new GreenHouseProduce();
+    List<Double> testData = new ArrayList<>();
+    calendar.add(Calendar.DAY_OF_YEAR, -2);
+    testData.addAll(Arrays.asList(20231111010101.0, 20.0, 20.0));
+    calendar.add(Calendar.DAY_OF_YEAR, 2); // Resetting back to Nov 13th
+    testData.addAll(Arrays.asList(20231114010101.0, 40.0, 40.0)); // Data from Nov 14th
+    ghp.pollSensorData(testData);
+    SuperTempHumidReading expectedReading = new SuperTempHumidReading(40.0, 40.0);
+
+    // Assuming getMiddleReading returns the latest valid reading
+    SuperTempHumidReading actualReading = ghp.getMiddleReading();
+
+    assertEquals(new SuperTempHumidReading(20.0, 20.0),ghp.middleReading());
+    }*/
 
 
 }
+
+

@@ -33,4 +33,6 @@ public interface Sensible {
      *         If there are no valid temperature or humidity values, respectively, then the resulting sensor reading should have -999 for that data
      */
     public TempHumidReading middleReading(double onDate);
+
+    Object getReading();
 }

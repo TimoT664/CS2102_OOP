@@ -1,20 +1,53 @@
-import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 /**
  * An abstract superclass to provide template methods for performance specific subclasses.
  */
 public abstract class AbsGreenHouse {
+    private GregorianCalendar calendar;
 
-    // GIVEN CODE
+    // Constructor
+    public AbsGreenHouse(GregorianCalendar calendar) {
+        this.calendar = (GregorianCalendar) calendar.clone();
+    }
+
+    // Method to process sensor data
+    public void pollSensorData(List<Double> sensorData) {
+        for (Double data : sensorData) {
+            if (isDataDateValid(data)) {
+                // Process the data
+            }
+        }
+    }
+
+    // Check if the data date is valid
+    private boolean isDataDateValid(Double dataDate) {
+        GregorianCalendar dataCalendar = convertToCalendar(dataDate);
+        return !dataCalendar.before(this.calendar);
+    }
+
+    // Convert the double value representing a date to a GregorianCalendar
+    private GregorianCalendar convertToCalendar(Double dataDate) {
+        String dateString = String.format("%.0f", dataDate);
+        int year = Integer.parseInt(dateString.substring(0, 4));
+        int month = Integer.parseInt(dateString.substring(4, 6)) - 1; // Month is 0-indexed
+        int day = Integer.parseInt(dateString.substring(6, 8));
+        int hour = Integer.parseInt(dateString.substring(8, 10));
+        int minute = Integer.parseInt(dateString.substring(10, 12));
+        int second = Integer.parseInt(dateString.substring(12, 14));
+        return new GregorianCalendar(year, month, day, hour, minute, second);
+    }
 
     /**
      * Assume a sensor value is a date if it is greater than January 1, 1970.
      * @param sensorDatum the datum which may be a date, datetime, temperature, or humidity
      * @return true if it is a formatted date number
      */
-    public boolean isDate(double sensorDatum){
+    public boolean isDate(double sensorDatum) {
         return sensorDatum > 19700101.0;
     }
 
@@ -23,7 +56,7 @@ public abstract class AbsGreenHouse {
      * @param sensorDatum the datum which may be a date, datetime, temperature, or humidity
      * @return true if it is a formatted date number
      */
-    public boolean isDateTime(double sensorDatum){
+    public boolean isDateTime(double sensorDatum) {
         return sensorDatum > 19700101000000.0;
     }
 
@@ -32,7 +65,7 @@ public abstract class AbsGreenHouse {
      * @param dateTime YYYYMMDDhhmmss.0
      * @return YYYYMMDD.0
      */
-    public double toDate(double dateTime){
+    public double toDate(double dateTime) {
         return Math.floor(dateTime / 1000000.0); // convert YYYYMMDDhhmmss -> YYYYMMDD
     }
 
@@ -42,16 +75,23 @@ public abstract class AbsGreenHouse {
      * @param date2 another YYYYMMDD.0
      * @return true if they are within some error tolerance (0.001) of each other
      */
-    public boolean sameDate(double date1, double date2){
+    public boolean sameDate(double date1, double date2) {
         return Math.abs(date1 - date2) < 0.001;
     }
-
 
     /**
      * Calculates the middle reading of temperature and humidity from sensor data.
      * @param sensorData a list of sensor readings containing temperature and humidity
      * @return SuperTempHumidReading object representing the middle temperature and humidity
      */
+    public TempHumidReading middleReading(List<Double> temperatures, List<Double> humidity) {
+        Double middleTemp = temperatures.isEmpty() ? -999 : temperatures.get(temperatures.size() - 1);
+        Double middleHumidity = humidity.isEmpty() ? -999 : humidity.get(humidity.size() - 1);
+
+        return new TempHumidReading(middleTemp, middleHumidity);
+    }
+
+
     protected SuperTempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
         // Extract temperatures and humidities, sort them, and calculate middle values
         List<Double> temperatures = sensorData.stream()
@@ -71,7 +111,6 @@ public abstract class AbsGreenHouse {
 
         // Create and return a SuperTempHumidReading object with middle values
         SuperTempHumidReading result = new SuperTempHumidReading(middleTemperature, middleHumidity);
-        //System.out.println("DEBUG: Returning " + result); // Debug print
         return result;
     }
 
@@ -94,10 +133,9 @@ public abstract class AbsGreenHouse {
      */
     protected boolean matchesDate(SuperTempHumidReading reading, double onDate) {
         double readingDate = reading.getDate();
-        if (isDate(onDate) && readingDate == onDate) {
-            return true;
-        } else {
-            return false;
-        }
+        return isDate(onDate) && readingDate == onDate;
     }
+
+    // ... Any additional methods or inner classes ...
+
 }
