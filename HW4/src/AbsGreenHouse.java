@@ -9,13 +9,16 @@ import java.util.ArrayList;
  */
 public abstract class AbsGreenHouse {
     private GregorianCalendar calendar;
-
+    private ParsedDataStrategy strategy;
+    private int numberOfErrors;
     // Constructor
     public AbsGreenHouse(GregorianCalendar calendar) {
         this.calendar = (GregorianCalendar) calendar.clone();
+        this.strategy = strategy;
     }
 
     public AbsGreenHouse() {
+
         this.calendar = new GregorianCalendar();
     }
 
@@ -24,10 +27,26 @@ public abstract class AbsGreenHouse {
         for (Double data : sensorData) {
             if (isDataDateValid(data)) {
                 // Process the data
+                SuperTempHumidReading reading = parseSensorData(data);
+                strategy.consumeData(reading);
+            } else {
+                numberOfErrors++;
             }
         }
     }
 
+
+    // Switching strategy
+    public void switchStrategy(ParsedDataStrategy newStrategy) {
+        strategy.switchStrategy(newStrategy);
+        strategy = newStrategy;
+    }
+
+    // Parse sensor data into a SuperTempHumidReading object
+    private SuperTempHumidReading parseSensorData(Double data) {
+        // Parsing logic here
+        return new SuperTempHumidReading(0, 0); // Placeholder
+    }
     // Check if the data date is valid
     private boolean isDataDateValid(Double dataDate) {
         GregorianCalendar dataCalendar = convertToCalendar(dataDate);
@@ -143,3 +162,7 @@ public abstract class AbsGreenHouse {
     // ... Any additional methods or inner classes ...
 
 }
+
+
+
+
