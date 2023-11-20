@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
-
+import java.util.Calendar;
 /**
  * An abstract superclass to provide template methods for performance specific subclasses.
  */
@@ -50,7 +50,23 @@ public abstract class AbsGreenHouse {
     // Check if the data date is valid
     private boolean isDataDateValid(Double dataDate) {
         GregorianCalendar dataCalendar = convertToCalendar(dataDate);
+        // Compare the GregorianCalendar instances directly
         return !dataCalendar.before(this.calendar);
+    }
+
+    private double calendarToDouble(GregorianCalendar calendar) {
+        double year = calendar.get(Calendar.YEAR);
+        double month = calendar.get(Calendar.MONTH) + 1;
+        double day = calendar.get(Calendar.DAY_OF_MONTH);
+        double hour = calendar.get(Calendar.HOUR_OF_DAY);
+        double minute = calendar.get(Calendar.MINUTE);
+        double second = calendar.get(Calendar.SECOND);
+        return second +
+                (minute * 100.0) +
+                (hour * 100.0 * 100.0) +
+                (day * 100.0 * 100.0 * 100.0) +
+                (month * 100.0 * 100.0 * 100.0 * 100.0) +
+                (year * 100.0 * 100.0 * 100.0 * 100.0 * 100.0);
     }
 
     // Convert the double value representing a date to a GregorianCalendar
@@ -113,6 +129,7 @@ public abstract class AbsGreenHouse {
 
         return new TempHumidReading(middleTemp, middleHumidity);
     }
+
 
 
     protected SuperTempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
