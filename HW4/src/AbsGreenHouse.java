@@ -51,6 +51,8 @@ public abstract class AbsGreenHouse {
     private boolean isDataDateValid(Double dataDate) {
         GregorianCalendar dataCalendar = convertToCalendar(dataDate);
         // Compare the GregorianCalendar instances directly
+        System.out.println("Data Calendar: " + dataCalendar.getTime());
+        System.out.println("Greenhouse Calendar: " + this.calendar.getTime());
         return !dataCalendar.before(this.calendar);
     }
 

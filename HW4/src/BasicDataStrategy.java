@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +8,8 @@ public class BasicDataStrategy implements ParsedDataStrategy {
     private List<SuperTempHumidReading> readings = new ArrayList<>();
     private List<Double> tempReadings = new ArrayList<>();
     private List<Double> humidityReadings = new ArrayList<>();
+    private double filterDate;
+
 
        @Override
     public void consumeData(SuperTempHumidReading data) {
@@ -16,20 +19,31 @@ public class BasicDataStrategy implements ParsedDataStrategy {
 
     @Override
     public void storeData() {
-        // Implement storing logic
-       for (int i = 0; i < readings.size(); i++) {
-          SuperTempHumidReading newReading = readings.get(i);
-          tempReadings.add(newReading.getTemperature());
-          humidityReadings.add(newReading.getHumidity());
+        // Filter readings based on the date
+        readings.removeIf(reading -> reading.getDate() < filterDate);
+
+        // Sort readings, assuming you want to sort by date
+        readings.sort(Comparator.comparing(SuperTempHumidReading::getDate));
+
+        // Store temperature and humidity from the filtered and sorted readings
+        for (SuperTempHumidReading newReading : readings) {
+            tempReadings.add(newReading.getTemperature());
+            humidityReadings.add(newReading.getHumidity());
 
        }
     }
 
-
     @Override
     public void sortData() {
-        // Sort the readings list
-        
+
+    }
+
+    /**
+     * Sets the date from which readings should be considered.
+     * @param filterDate The date in YYYYMMDDhhmmss.0 format.
+     */
+    public void setFilterDate(double filterDate) {
+        this.filterDate = filterDate;
     }
 
     @Override
