@@ -244,23 +244,24 @@ public class Examples {
     //test for bug 1
     @Test
     public void testAbsGreenHouseIgnoresOldData() {
-    GregorianCalendar calendar = new GregorianCalendar(2023, Calendar.NOVEMBER, 13);
-    GreenHouseProduce ghp = new GreenHouseProduce(calendar);
-    List<Double> testData = new ArrayList<>();
-    calendar.add(Calendar.DAY_OF_YEAR, -2);
-    testData.addAll(Arrays.asList(20231111010101.0, 20.0, 20.0));
-    calendar.add(Calendar.DAY_OF_YEAR, 2); // Resetting back to Nov 13th
-    testData.addAll(Arrays.asList(20231114010101.0, 40.0, 40.0)); // Data from Nov 14th
-    ghp.pollSensorData(testData);
-    SuperTempHumidReading expectedReading = new SuperTempHumidReading(40.0, 40.0);
+        GregorianCalendar calendar = new GregorianCalendar(2023, Calendar.NOVEMBER, 13);
+        GreenHouseProduce ghp = new GreenHouseProduce(calendar);
+        List<Double> testData = new ArrayList<>();
+        calendar.add(Calendar.DAY_OF_YEAR, -2);
+        testData.addAll(Arrays.asList(20231111010101.0, 20.0, 20.0));
+        calendar.add(Calendar.DAY_OF_YEAR, 2); // Resetting back to Nov 13th
+        testData.addAll(Arrays.asList(20231114010101.0, 40.0, 40.0)); // Data from Nov 14th
+        ghp.pollSensorData(testData);
+        SuperTempHumidReading expectedReading = new SuperTempHumidReading(40.0, 40.0);
 
-    // Assuming getMiddleReading returns the latest valid reading
-    //SuperTempHumidReading actualReading = ghp.middleReading();
+        // Assuming getMiddleReading returns the latest valid reading
+        //SuperTempHumidReading actualReading = ghp.middleReading();
 
-    assertEquals(new SuperTempHumidReading(40.0, 40.0),ghp.middleReading());
+        assertEquals(new SuperTempHumidReading(40.0, 40.0),ghp.middleReading());
     }
+
     @Test
-        public void testPercentError() {
+    public void testPercentError() {
         GregorianCalendar calendar = new GregorianCalendar(2023, Calendar.NOVEMBER, 13);
         GreenHouseProduce ghp = new GreenHouseProduce(calendar);
 
@@ -270,7 +271,51 @@ public class Examples {
         double actualErrorPercent = ghp.percentError();
             // Assert that the calculated error percent matches the expected value
         assertEquals(expectedErrorPercent, actualErrorPercent, 0.01); // Using a delta for floating point comparison
-        }
+    }
+
+    @Test
+    public void testDataBeforeDateIsBlocked() {
+        //Test constructed a GreenHouseNursery object with GC for date Nov 13th, 2023
+        GregorianCalendar calendar = new GregorianCalendar(2023, Calendar.NOVEMBER, 13);
+        GreenHouseNursery gn = new GreenHouseNursery(calendar);
+
+        //Data Calendar: Sun Nov 12 01:01:01 GMT 2023
+        List<Double> testData = Arrays.asList(20231112010101.0, -999.0, 25.0);
+        //Greenhouse Calendar: Mon Nov 13 01:01:01 GMT 2023
+        gn.pollSensorData(testData);
+
+        /*for (Double currentData : gn.data){
+            System.out.println(currentData);
+        }*/
+        //Test called pollSensorData() for datetime on Nov 12th,  2023 with 1 temperature and 1 humidity
+        double onDate = 20231112010101.0;;
+        SuperTempHumidReading sthr = gn.middleReading(onDate);
+        //SuperTempHumidReading sthr = gn.middleReading();
+
+        assertEquals("{Err;Err}", sthr.toString()); // Using a delta for floating point comparison
+    }
+
+    @Test
+    public void testPercentageErrorWithErrors() {
+        /*{Err;20.0%}date: 2.0231114E7
+        {Err;30.0%}date: 2.0231114E7
+        {Err;25.0%}date: 2.0231114E7
+        {Err;22.0%}date: 2.0231114E7
+        */
+        //Greenhouse Calendar: Mon Nov 13 01:01:01 GMT 2023
+        GregorianCalendar calendar = new GregorianCalendar(2023, Calendar.NOVEMBER, 13);
+        GreenHouseProduce ghp = new GreenHouseProduce(calendar);
+
+        //Data Calendar: Tue Nov 14 01:01:01 GMT 2023
+        List<Double> testData = Arrays.asList(20231114010101.0, -999.0, 20.0, -999.0, 30.0, -999.0, 25.0, -999.0, 22.0);
+        ghp.pollSensorData(testData);
+
+        //Test Failed: expected:<50.0> but was:<0.0> at edu.wpi.hw4.Autograder.testPercentError2:151 (Autograder.java)
+        double expectedErrorPercent = 50.0;
+        double actualErrorPercent = ghp.percentError();
+        // Assert that the calculated error percent matches the expected value
+        assertEquals(expectedErrorPercent, actualErrorPercent, 0.01); // Using a delta for floating point comparison
+    }
 
 
 }

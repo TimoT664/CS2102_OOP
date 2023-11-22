@@ -24,7 +24,7 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible, Qualit
 
     @Override
     public void pollSensorData(List<Double> values) {
-        List<Double> newData = ignoreDataBeforeGC(values);
+        values = ignoreDataBeforeGC(values);
         double savedDateTime = -1;
         for (int i = 0; i < values.size(); i++) {
             double currentValue = values.get(i);
@@ -54,19 +54,19 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible, Qualit
         }
 
         // Code below is for testing purposes to print sensor data (can be removed in production)
-        /*int i = 0;
+     /*   int i = 0;
         for (SuperTempHumidReading sd : sensorData){
             System.out.println(sd.toString() + "date: " + sd.getDate());
             i++;
             if (i == 30 ){
                 break;
             }
-        } */
+        }*/
         // End of testing code
     }
 
     @Override
-    public TempHumidReading middleReading() {
+    public SuperTempHumidReading middleReading() {
         return calculateMiddleReading(sensorData);
     }
 
@@ -92,6 +92,30 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible, Qualit
      */
     @Override
     public double percentError() {
-        return 0;
+        if (sensorData == null || sensorData.isEmpty()) {
+            return 0.0; // If the list is empty or null, return 0%
+        }
+
+        int totalNonDatetimeValues = 0;
+        int negativeValues = 0;
+
+        for (SuperTempHumidReading reading : sensorData) {
+            if (!isDateTime(reading.getDate())) {
+                if (reading.temperature == -999.0) {
+                    negativeValues++;
+                }
+                if(reading.humidity == -999.0){
+                    negativeValues++;
+                }
+                totalNonDatetimeValues+=2;
+            }
+        }
+
+        if (totalNonDatetimeValues == 0) {
+            return 0.0; // To avoid division by zero
+        }
+
+        double percentage = ((double) negativeValues / totalNonDatetimeValues) * 100.0;
+        return percentage;
     }
 }

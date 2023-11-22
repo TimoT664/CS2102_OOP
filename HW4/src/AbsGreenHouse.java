@@ -39,11 +39,10 @@ public abstract class AbsGreenHouse {
         boolean flag = false;
         for (Double d : data) {
             if (isDate(d)) {
-                    if (isDataDateValid(d)){
-                        newData.add(d);
-                        flag = true;
-                    }
-
+                if (isDataDateValid(d)){
+                    newData.add(d);
+                    flag = true;
+                }
             }
             else{
                 if (flag){

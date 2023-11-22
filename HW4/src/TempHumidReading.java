@@ -23,10 +23,10 @@ public class TempHumidReading {
     }
 
     public double getTemperature() {
-        return 0;
+        return this.temperature;
     }
 
     public double getHumidity() {
-        return 0;
+        return this.humidity;
     }
 }
