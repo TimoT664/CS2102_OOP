@@ -34,7 +34,25 @@ public abstract class AbsGreenHouse {
             }
         }
     }
+    protected List<Double> ignoreDataBeforeGC(List<Double> data) {
+        List<Double> newData = new LinkedList<>();
+        boolean flag = false;
+        for (Double d : data) {
+            if (isDate(d)) {
+                    if (isDataDateValid(d)){
+                        newData.add(d);
+                        flag = true;
+                    }
 
+            }
+            else{
+                if (flag){
+                    newData.add(d);
+                }
+            }
+        }
+        return newData;
+    }
 
     // Switching strategy
     public void switchStrategy(ParsedDataStrategy newStrategy) {

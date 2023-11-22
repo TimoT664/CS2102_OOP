@@ -19,10 +19,12 @@ public class GreenHouseNursery extends AbsGreenHouse implements Sensible, Qualit
         //code
     }
 
+
     private List<SuperTempHumidReading> sensorData = new ArrayList<>();
 
     @Override
     public void pollSensorData(List<Double> values) {
+        List<Double> newData = ignoreDataBeforeGC(values);
         double savedDateTime = -1;
         for (int i = 0; i < values.size(); i++) {
             double currentValue = values.get(i);
