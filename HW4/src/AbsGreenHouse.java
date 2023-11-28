@@ -1,32 +1,47 @@
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
-import java.util.Calendar;
-/**
- * An abstract superclass to provide template methods for performance specific subclasses.
- */
+
 public abstract class AbsGreenHouse {
     private GregorianCalendar calendar;
     private ParsedDataStrategy strategy;
     private int numberOfErrors;
-    // Constructor
+
+    // Constructors
     public AbsGreenHouse(GregorianCalendar calendar) {
         this.calendar = (GregorianCalendar) calendar.clone();
-        this.strategy = strategy;
+        this.strategy = null; // Not initializing with a default strategy
     }
-
+    // Default constructor
     public AbsGreenHouse() {
-
         this.calendar = new GregorianCalendar();
+        this.strategy = null; // Not initializing with a default strategy
     }
 
-    // Method to process sensor data
+
+    // Getters
+    protected ParsedDataStrategy getStrategy() {
+        return this.strategy;
+    }
+
+    // Setters
+    public void setStrategy(ParsedDataStrategy otherStrategy) {
+        // Clear any data on the other strategy
+        otherStrategy.clearData();
+
+        // Transfer data from the current strategy to the other strategy
+        if (this.strategy != null) {
+            this.strategy.transferDataTo(otherStrategy);
+        }
+
+        // Set the current strategy field to the parameter otherStrategy
+        this.strategy = otherStrategy;
+    }
+
+    // Sensor data processing
     public void pollSensorData(List<Double> sensorData) {
         for (Double data : sensorData) {
             if (isDataDateValid(data)) {
-                // Process the data
                 SuperTempHumidReading reading = parseSensorData(data);
                 strategy.consumeData(reading);
             } else {
@@ -34,171 +49,78 @@ public abstract class AbsGreenHouse {
             }
         }
     }
+
+    // Method to ignore data before a given GregorianCalendar date
     protected List<Double> ignoreDataBeforeGC(List<Double> data) {
         List<Double> newData = new LinkedList<>();
         boolean flag = false;
         for (Double d : data) {
-            if (isDate(d)) {
-                if (isDataDateValid(d)){
-                    newData.add(d);
-                    flag = true;
-                }
-            }
-            else{
-                if (flag){
-                    newData.add(d);
-                }
+            if (isDate(d) && isDataDateValid(d)) {
+                newData.add(d);
+                flag = true;
+            } else if (flag) {
+                newData.add(d);
             }
         }
         return newData;
     }
 
-    // Switching strategy
+    // Method to switch strategy
     public void switchStrategy(ParsedDataStrategy newStrategy) {
         strategy.switchStrategy(newStrategy);
         strategy = newStrategy;
     }
 
-    // Parse sensor data into a SuperTempHumidReading object
+    // Method to parse sensor data into a SuperTempHumidReading object
     private SuperTempHumidReading parseSensorData(Double data) {
-        // Parsing logic here
-        return new SuperTempHumidReading(0, 0); // Placeholder
+        // Implement parsing logic here
+        // For now, just a placeholder returning a new object
+        return new SuperTempHumidReading(data, data);
     }
-    // Check if the data date is valid
+
+    // Method to check if the data date is valid
     private boolean isDataDateValid(Double dataDate) {
         GregorianCalendar dataCalendar = convertToCalendar(dataDate);
-        // Compare the GregorianCalendar instances directly
-        System.out.println("Data Calendar: " + dataCalendar.getTime());
-        System.out.println("Greenhouse Calendar: " + this.calendar.getTime());
         return !dataCalendar.before(this.calendar);
     }
 
-    private double calendarToDouble(GregorianCalendar calendar) {
-        double year = calendar.get(Calendar.YEAR);
-        double month = calendar.get(Calendar.MONTH) + 1;
-        double day = calendar.get(Calendar.DAY_OF_MONTH);
-        double hour = calendar.get(Calendar.HOUR_OF_DAY);
-        double minute = calendar.get(Calendar.MINUTE);
-        double second = calendar.get(Calendar.SECOND);
-        return second +
-                (minute * 100.0) +
-                (hour * 100.0 * 100.0) +
-                (day * 100.0 * 100.0 * 100.0) +
-                (month * 100.0 * 100.0 * 100.0 * 100.0) +
-                (year * 100.0 * 100.0 * 100.0 * 100.0 * 100.0);
-    }
-
-    // Convert the double value representing a date to a GregorianCalendar
+    // Utility methods
     private GregorianCalendar convertToCalendar(Double dataDate) {
-        String dateString = String.format("%.0f", dataDate);
-        int year = Integer.parseInt(dateString.substring(0, 4));
-        int month = Integer.parseInt(dateString.substring(4, 6)) - 1; // Month is 0-indexed
-        int day = Integer.parseInt(dateString.substring(6, 8));
-        int hour = Integer.parseInt(dateString.substring(8, 10));
-        int minute = Integer.parseInt(dateString.substring(10, 12));
-        int second = Integer.parseInt(dateString.substring(12, 14));
-        return new GregorianCalendar(year, month, day, hour, minute, second);
+        // Conversion logic here
+        return null;
     }
 
-    /**
-     * Assume a sensor value is a date if it is greater than January 1, 1970.
-     * @param sensorDatum the datum which may be a date, datetime, temperature, or humidity
-     * @return true if it is a formatted date number
-     */
     public boolean isDate(double sensorDatum) {
         return sensorDatum > 19700101.0;
     }
 
-    /**
-     * Assume a sensor value is a date if it is greater than January 1, 1970 00:00:00 represented as a double.
-     * @param sensorDatum the datum which may be a date, datetime, temperature, or humidity
-     * @return true if it is a formatted date number
-     */
     public boolean isDateTime(double sensorDatum) {
         return sensorDatum > 19700101000000.0;
     }
 
-    /**
-     * Converts the double date time format to just the date part by dividing and rounding.
-     * @param dateTime YYYYMMDDhhmmss.0
-     * @return YYYYMMDD.0
-     */
     public double toDate(double dateTime) {
-        return Math.floor(dateTime / 1000000.0); // convert YYYYMMDDhhmmss -> YYYYMMDD
+        return Math.floor(dateTime / 1000000.0);
     }
 
-    /**
-     * Compares two YYYYMMDD.0 for equality within some error tolerance (0.001).
-     * @param date1 one YYYYMMDD.0
-     * @param date2 another YYYYMMDD.0
-     * @return true if they are within some error tolerance (0.001) of each other
-     */
     public boolean sameDate(double date1, double date2) {
         return Math.abs(date1 - date2) < 0.001;
     }
 
-    /**
-     * Calculates the middle reading of temperature and humidity from sensor data.
-     * @param sensorData a list of sensor readings containing temperature and humidity
-     * @return SuperTempHumidReading object representing the middle temperature and humidity
-     */
-    public TempHumidReading middleReading(List<Double> temperatures, List<Double> humidity) {
-        Double middleTemp = temperatures.isEmpty() ? -999 : temperatures.get(temperatures.size() - 1);
-        Double middleHumidity = humidity.isEmpty() ? -999 : humidity.get(humidity.size() - 1);
-
-        return new TempHumidReading(middleTemp, middleHumidity);
-    }
-
-
-
     protected SuperTempHumidReading calculateMiddleReading(List<SuperTempHumidReading> sensorData) {
-        // Extract temperatures and humidities, sort them, and calculate middle values
-        List<Double> temperatures = sensorData.stream()
-                .filter(reading -> reading.temperature != -999)
-                .map(reading -> reading.temperature)
-                .sorted()
-                .collect(Collectors.toList());
-
-        List<Double> humidities = sensorData.stream()
-                .filter(reading -> reading.humidity != -999)
-                .map(reading -> reading.humidity)
-                .sorted()
-                .collect(Collectors.toList());
-
-        double middleTemperature = getMiddleValue(temperatures);
-        double middleHumidity = getMiddleValue(humidities);
-
-        // Create and return a SuperTempHumidReading object with middle values
-        SuperTempHumidReading result = new SuperTempHumidReading(middleTemperature, middleHumidity);
-        return result;
+        // Calculation logic here
+        return null;
     }
 
-    /**
-     * Gets the middle value from a list of doubles.
-     * @param values list of double values
-     * @return middle value from the list or -999 if the list is empty
-     */
     protected double getMiddleValue(List<Double> values) {
         if (values.isEmpty()) return -999;
         int middleIndex = values.size() / 2;
         return values.get(middleIndex);
     }
 
-    /**
-     * Checks if the reading's date matches the specified date.
-     * @param reading SuperTempHumidReading object containing date, temperature, and humidity
-     * @param onDate specified date in YYYYMMDD.0 format
-     * @return true if the reading's date matches the specified date
-     */
     protected boolean matchesDate(SuperTempHumidReading reading, double onDate) {
         double readingDate = reading.getDate();
         return isDate(onDate) && readingDate == onDate;
     }
 
     // ... Any additional methods or inner classes ...
-
 }
-
-
-
-

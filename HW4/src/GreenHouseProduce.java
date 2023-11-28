@@ -33,7 +33,7 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible, Qualit
                 savedDateTime = currentValue;
                 temperature = values.get(i + 1);
                 humidity = values.get(i + 2);
-                i = i +2;
+                i = i + 2;
             }
             else{
                 if (i + 1 >= values.size()) {
@@ -74,7 +74,10 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible, Qualit
     }
 
     public SuperTempHumidReading getMiddleReading() {
-        return null;
+        if (this.getStrategy() == null) {
+            return null; // or handle as required
+        }
+        return (SuperTempHumidReading) this.getStrategy().getMiddleReading();
     }
 
     /**
@@ -110,4 +113,6 @@ public class GreenHouseProduce extends AbsGreenHouse implements Sensible, Qualit
         double percentage = ((double) negativeValues / totalNonDatetimeValues) * 100.0;
         return percentage;
     }
+
+    // Additional methods and logic...
 }

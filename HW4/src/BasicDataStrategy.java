@@ -65,5 +65,15 @@ public class BasicDataStrategy implements ParsedDataStrategy {
         }
         readings.clear();
     }
+
+    @Override
+    public void clearData() {
+
+    }
+
+    @Override
+    public void transferDataTo(ParsedDataStrategy otherStrategy) {
+
+    }
 }
 

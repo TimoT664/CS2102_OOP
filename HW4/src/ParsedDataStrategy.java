@@ -5,4 +5,8 @@ public interface ParsedDataStrategy {
     SuperTempHumidReading getMiddleReading();
     SuperTempHumidReading getMiddleReadingOnDate(double date);
     void switchStrategy(ParsedDataStrategy otherStrategy);
+
+    void clearData();
+
+    void transferDataTo(ParsedDataStrategy otherStrategy);
 }

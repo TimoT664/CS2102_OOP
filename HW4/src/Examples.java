@@ -317,6 +317,84 @@ public class Examples {
         assertEquals(expectedErrorPercent, actualErrorPercent, 0.01); // Using a delta for floating point comparison
     }
 
+    @Test
+    public void testConsumeAndRetrieveData() {
+        AlternativeDataStrategy strategy = new AlternativeDataStrategy();
+        SuperTempHumidReading reading1 = new SuperTempHumidReading(25.0, 50.0);
+        SuperTempHumidReading reading2 = new SuperTempHumidReading(26.0, 55.0);
+
+        strategy.consumeData(reading1);
+        strategy.consumeData(reading2);
+
+        SuperTempHumidReading middleReading = strategy.getMiddleReading();
+
+        // Assuming getMiddleReading returns the second element when there are two elements
+        assertEquals("Middle reading should be the second reading", reading2, middleReading);
+    }
+    @Test
+    public void testHandlingEmptyDataSet() {
+        AlternativeDataStrategy strategy = new AlternativeDataStrategy();
+        SuperTempHumidReading reading = strategy.getMiddleReading(); // Should return null or a default value for empty data set
+        assertNull("Should return null for empty data set", reading);
+    }
+
+
+    /**@Test
+    public void testDataConsistencyAfterOperations() {
+        AlternativeDataStrategy strategy = new AlternativeDataStrategy();
+        strategy.consumeData(new SuperTempHumidReading(25.0, 50.0));
+        strategy.consumeData(new SuperTempHumidReading(26.0, 55.0));
+
+        strategy.sortData(); // Assuming this sorts the data
+
+        // Verify the first element is the smallest after sorting
+        assertEquals(new SuperTempHumidReading(25.0, 50.0), strategy.getData().get(0));
+    }*/
+
+
+    /**@Test(expected = IllegalArgumentException.class)
+    public void testHandlingInvalidDataInput() {
+        SuperTempHumidReading invalidReading = new SuperTempHumidReading(-1000, -1000); // Assuming these values are invalid
+        AlternativeDataStrategy strategy = new AlternativeDataStrategy();
+        strategy.consumeData(invalidReading); // This should throw an IllegalArgumentException
+    }*/
+
+    /**@Test
+    public void testSettingNewStrategyAndDataTransfer() {
+        AbsGreenHouse greenhouse = new GreenHouseProduce(); // Replace with your actual AbsGreenHouse implementation
+        greenhouse.setStrategy(new AlternativeDataStrategy()); // Set initial strategy
+
+        // Populate data in the initial strategy
+        greenhouse.getStrategy().consumeData(new SuperTempHumidReading(25.0, 50.0));
+
+        AlternativeDataStrategy newStrategy = new AlternativeDataStrategy();
+        greenhouse.setStrategy(newStrategy); // Switch to a new strategy
+
+        // Check if the new strategy has the transferred data
+        assertNotNull("New strategy should have data", newStrategy.getMiddleReading());
+
+        // Check if old strategy data is cleared
+        AlternativeDataStrategy oldStrategy = null;
+        assertNull("Old strategy data should be cleared", oldStrategy.getMiddleReading());
+    } */
+
+    /**@Test
+    public void testStrategySwitchDataTransfer() {
+        GreenHouseProduce produce = new GreenHouseProduce();
+        produce.pollSensorData(sensorData); // Assuming sensorData has some preloaded values
+
+        AlternativeDataStrategy oldStrategy = new AlternativeDataStrategy();
+        produce.setStrategy(oldStrategy); // Set the initial strategy
+
+        AlternativeDataStrategy newStrategy = new AlternativeDataStrategy();
+        produce.setStrategy(newStrategy); // Switch to a new strategy
+
+        // Check if old strategy data is cleared
+        assertNull("Old strategy data should be cleared", oldStrategy.getMiddleReading());
+
+        // Check if new strategy has the transferred data
+        assertNotNull("New strategy should have data", newStrategy.getMiddleReading());
+    }*/
 
 }
 
