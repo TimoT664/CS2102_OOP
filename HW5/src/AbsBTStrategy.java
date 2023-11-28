@@ -1,5 +1,3 @@
-package src;
-
 /**
  * An abstract binary tree removal strategy which is defined in terms of addition
  */

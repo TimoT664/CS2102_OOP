@@ -1,4 +1,3 @@
-package src;
 
 /**
  * A default validator which says that all trees are valid

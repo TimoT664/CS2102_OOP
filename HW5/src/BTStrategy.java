@@ -1,5 +1,3 @@
-package src;
-
 /**
  * The strategy for adding and removing integers from an integer binary tree
  */

@@ -1,4 +1,3 @@
-package src;
 
 /**
  * An example max heap strategy for adding an int to an existing max heap

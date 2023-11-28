@@ -1,5 +1,3 @@
-package src;
-
 /**
  * A Strategy for adding integers in breadth first order
  */

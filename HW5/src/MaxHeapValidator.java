@@ -1,4 +1,3 @@
-package src;
 
 /**
  * Class MaxHeapValidator implements BTValidator interface.

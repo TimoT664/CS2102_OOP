@@ -1,5 +1,3 @@
-package src;
-
 /**
  * An object (essentially a strategy) describing how to check the invariants of a particular kind of binary tree
  * (E.g. BST, AVL, MinHeap, MaxHeap, etc.)

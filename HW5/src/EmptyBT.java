@@ -1,5 +1,3 @@
-package src;
-
 /**
  * One of exactly two cases for a Binary Tree: a Leaf
  * Contains no data, used mainly to signal the end/backtracking of traversal
