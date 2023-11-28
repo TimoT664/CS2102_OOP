@@ -1,9 +1,8 @@
+
 /**
  * An abstract binary tree removal strategy which is defined in terms of addition
  */
 public abstract class AbsBTStrategy implements BTStrategy {
-
-
     /**
      * Adding an element to a tree is a subclass responsibility
      * @param i the element to add

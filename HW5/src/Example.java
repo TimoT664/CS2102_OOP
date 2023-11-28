@@ -1,35 +1,22 @@
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.*;
-
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertNotNull;
 
-
-public class Example {
-    List<Double> values;
+public class Examples {
+    IBinTree mt;
+    MaxHeapValidator validator;
 
     @Before
     public void setUp() {
-        // Initialize shared resources her
-    }
-
-    public Example(){
-
+        mt = new EmptyBT();
+        validator = new MaxHeapValidator();
     }
 
     @Test
-    public void testGreenHouseNurseryDiffMonth2(){
-        double expect = 2;
-        double result = 5-3;
-        assertEquals(expect,result,0.01);
-    }
-
-    @Test
-    public void testSCorrectValues() {
-        assertEquals("{98.6F;33.4%}", "1234");
+    public void validateAddedContainsElt() {
+        assertTrue("Valid addition should return true",
+                validator.validAdd(mt, 3, new NodeBT(3, mt, mt)));
+        assertFalse("Invalid addition should return false",
+                validator.validAdd(mt, 3, new NodeBT(4, mt, mt)));
     }
 }
-
-
