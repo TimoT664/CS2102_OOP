@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 
 
-public class Examples {
+public class ExamplesHW4 {
     List<Double> values;
     LinkedList<Double> data;
     GreenHouseProduce greenHouseProduce;
@@ -25,7 +25,7 @@ public class Examples {
 
 
 
-    public Examples(){
+    public ExamplesHW4(){
         GregorianCalendar gc = new GregorianCalendar(2023,10,13,1,1,1); // Nov 13th 2023, 01:01:01am
         gc.add(Calendar.DAY_OF_YEAR,-2); // Nov 11th 2023, 01:01:01am
 
