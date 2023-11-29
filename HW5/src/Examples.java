@@ -96,5 +96,31 @@ public class Examples {
         assertFalse(validator.validRemove(new NodeBT(4,new NodeBT(3,new NodeBT(2,emptyTree, emptyTree), emptyTree),emptyTree),
                 4, new NodeBT(2,new NodeBT(3,emptyTree, emptyTree), emptyTree)));
     }
+    @Test
+    public void validateAddNonEmptyTree() {
+        MaxHeapValidator validator = new MaxHeapValidator();
+        IBinTree tree = new NodeBT(10, new NodeBT(8, mt, mt), new NodeBT(6, mt, mt));
+        IBinTree expectedResult = new NodeBT(10, new NodeBT(8, new NodeBT(7, mt, mt), mt), new NodeBT(6, mt, mt));
+        assertTrue(validator.validAdd(tree, 7, expectedResult));
+
+        IBinTree badResult = new NodeBT(10, new NodeBT(7, new NodeBT(8, mt, mt), mt), new NodeBT(6, mt, mt));
+        assertFalse(validator.validAdd(tree, 7, badResult));
+    }
+    @Test
+    public void validateRemoveEmptyTree() {
+        MaxHeapValidator validator = new MaxHeapValidator();
+        assertFalse(validator.validRemove(mt, 5, mt));
+    }
+    @Test
+    public void validateRemoveNonEmptyTree() {
+        MaxHeapValidator validator = new MaxHeapValidator();
+        IBinTree tree = new NodeBT(10, new NodeBT(8, mt, mt), new NodeBT(6, mt, mt));
+        IBinTree expectedResult = new NodeBT(8, mt, new NodeBT(6, mt, mt));
+        assertTrue(validator.validRemove(tree, 10, expectedResult));
+
+        IBinTree badResult = new NodeBT(10, new NodeBT(6, mt, mt), new NodeBT(8, mt, mt));
+        assertFalse(validator.validRemove(tree, 10, badResult));
+    }
+
 
 }
