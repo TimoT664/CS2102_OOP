@@ -49,11 +49,11 @@ public class ExamplesHW3 {
         assertEquals(new OldSuperOldTempHumidReading(5.5,5.5),gh.middleReading(20231110));
     }
 
-    /*
+
     @Test
     public void testDate() {
         OldGreenHouseNursery greenHouseNursery = new OldGreenHouseNursery();
-        greenHouseNursery.pollSensorData(values);
+        greenHouseNursery.pollSensorData(sameMonth);
         double onDate = 20231106010101.0;
         double date = greenHouseNursery.toDate(onDate);
         System.out.println(date);
@@ -66,7 +66,7 @@ public class ExamplesHW3 {
     @Test
     public void testMiddleReadingOnMonthDateNurseryNoDate() {
         OldGreenHouseNursery greenHouseNursery = new OldGreenHouseNursery();
-        greenHouseNursery.pollSensorData(values);
+        greenHouseNursery.pollSensorData(sameMonth);
         double onDate = 20231106010101.0;
         OldSuperOldTempHumidReading expectedReading = new OldSuperOldTempHumidReading(36.4,31.0);
         OldSuperOldTempHumidReading actualReading = (OldSuperOldTempHumidReading) greenHouseNursery.middleReading();
@@ -76,7 +76,7 @@ public class ExamplesHW3 {
     @Test
     public void testMiddleReadingOnMonthDateNurseryOnDate() {
         OldGreenHouseNursery greenHouseNursery = new OldGreenHouseNursery();
-        greenHouseNursery.pollSensorData(values);
+        greenHouseNursery.pollSensorData(sameMonth);
         double onDate = 20231106010101.0;
         OldSuperOldTempHumidReading expectedReading = new OldSuperOldTempHumidReading(45.0,34.0);
         OldSuperOldTempHumidReading actualReading = (OldSuperOldTempHumidReading) greenHouseNursery.middleReading(onDate);
@@ -86,7 +86,7 @@ public class ExamplesHW3 {
     @Test
     public void testMiddleReadingOnMonthDateNurseryOnADateNotInList() {
         OldGreenHouseNursery greenHouseNursery = new OldGreenHouseNursery();
-        greenHouseNursery.pollSensorData(values);
+        greenHouseNursery.pollSensorData(sameMonth);
         double onDate = 20210106010101.0;
         OldSuperOldTempHumidReading expectedReading = new OldSuperOldTempHumidReading(45.0,34.0);
         OldSuperOldTempHumidReading actualReading = (OldSuperOldTempHumidReading) greenHouseNursery.middleReading(onDate);
