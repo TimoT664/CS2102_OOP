@@ -4,13 +4,24 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
-
 public class Examples {
     public BinaryTree someTree1;
     public BinaryTree someTree2;
     public BinaryTree someTree3;
     public IBinTree emptyTree;
+    IBinTree mt = new EmptyBT();
 
+    IBinTree tree1 = new NodeBT(7, new NodeBT(5, mt, mt),new NodeBT(4, mt, mt));
+    IBinTree goodTree1Add = new NodeBT(7,
+            new NodeBT(6,
+                    new NodeBT(5, mt, mt),
+                    mt),
+            new NodeBT(4,mt, mt));
+    IBinTree badTree1Add = new NodeBT(7,
+            new NodeBT(0,
+                    new NodeBT(5, mt, mt),
+                    mt),
+            new NodeBT(4,mt, mt));
     public Examples() {
 
        someTree1 = new BinaryTree(List.of(5,2,7,1,3,6,9));
@@ -19,11 +30,29 @@ public class Examples {
        emptyTree = new EmptyBT();
 
     }
+    //test valid working or not working
+   @Test
+   public void validateAddExistingTree() {
+        MaxHeapValidator validator = new MaxHeapValidator();
+        assertTrue(validator.validAdd(tree1,6, goodTree1Add ));
+        assertFalse(validator.validAdd(tree1, 6, badTree1Add));
+
+   }
+
+    // contains
+    @Test
+    public void validateAddedContainsElt(){
+        MaxHeapValidator validator = new MaxHeapValidator();
+        assertTrue(validator.validAdd(mt, 3, new NodeBT(3, mt, mt)));
+        assertFalse(validator.validAdd(mt, 3, new NodeBT(4, mt,mt)));
+    }
+
     //Max at root
      @Test
     public void testMaxElementsAtRoot1() {
         BinaryTree tree = new BinaryTree(someTree1);
         tree.setValidator(new MaxHeapValidator());
+        tree.setStrategy(new FaultyMaxHeapStrategy2());
         assertFalse(tree.addInt(4));
     }
 
@@ -53,6 +82,19 @@ public class Examples {
         assertTrue(tree.addInt(27));
 
     }
-    //Remove using faulty strategy
+    // Remove using faulty strategy
+    @Test
+    public void testFaultyRemove1(){
+        MaxHeapValidator validator = new MaxHeapValidator();
+        assertFalse(validator.validRemove(new NodeBT(4,new NodeBT(3,new NodeBT(2,emptyTree, emptyTree), emptyTree),emptyTree),
+                4, new NodeBT(2,new NodeBT(3,emptyTree, emptyTree), emptyTree)));
+    }
+
+    @Test
+    public void testFaultyRemove2(){
+        MaxHeapValidator validator = new MaxHeapValidator();
+        assertFalse(validator.validRemove(new NodeBT(4,new NodeBT(3,new NodeBT(2,emptyTree, emptyTree), emptyTree),emptyTree),
+                4, new NodeBT(2,new NodeBT(3,emptyTree, emptyTree), emptyTree)));
+    }
 
 }

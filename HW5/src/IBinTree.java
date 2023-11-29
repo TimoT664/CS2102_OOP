@@ -1,5 +1,3 @@
-
-
 /**
  * An Interface for an Immutable Binary Tree
  * Uses the Strategy Pattern for how to add elements
