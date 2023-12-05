@@ -81,7 +81,6 @@ public class Examples {
         assertEquals(Optional.of(expectedWinner), eData.calculateWinner());
     }
 
-
     @Test(expected = CandidateNotNominatedException.class)
     public void testVotingForNonNominatedCandidate() throws CandidateNotNominatedException, MoreThanOnceException, AlreadyNominatedException {
         eData.nominateCandidate("gompei");
