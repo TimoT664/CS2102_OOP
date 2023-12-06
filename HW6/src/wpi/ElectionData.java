@@ -1,5 +1,6 @@
 package wpi;
 
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ public class ElectionData {
     //Has at least fields with the following types:
     //a HashMap<String, Votes>
     //stores the votes for every nominated candidate
+    private HashMap<String,Votes> candidatesData = new HashMap<>();
     //I3VoteStrategy
     // stores the current winner calculation strategy
     //Has at least one constructor with the signature:
@@ -33,7 +35,9 @@ public class ElectionData {
 
     public ElectionData(I3VoteStrategy strategy){}
     public void setStrategy(I3VoteStrategy strategy){}
-    public Set<String> getCandidates(){return null;}
+    public Set<String> getCandidates(){
+
+        return candidatesData.keySet(); }
     public void nominateCandidate(String person) throws AlreadyNominatedException{}
     public void submitVote(String first, String second, String third) throws CandidateNotNominatedException, MoreThanOnceException{}
     public Optional<String> calculateWinner(){return Optional.empty();}
