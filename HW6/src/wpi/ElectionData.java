@@ -1,44 +1,57 @@
 package wpi;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 public class ElectionData {
 
-    // TODO
-    //Has at least fields with the following types:
-    //a HashMap<String, Votes>
-    //stores the votes for every nominated candidate
-    private HashMap<String,Votes> candidatesData = new HashMap<>();
-    //I3VoteStrategy
-    // stores the current winner calculation strategy
-    //Has at least one constructor with the signature:
-    //public ElectionData(I3VoteStrategy strategy)
-    //initializes all of the fields
-    //Has the methods:
-    //public void setStrategy(I3VoteStrategy strategy)
-    //updates the strategy field
-    //public Set<String> getCandidates()
-    //returns the list of candidates using HashMap's keySet() method
-    //public void nominateCandidate(String person) throws AlreadyNominatedException
-    //throws an exception if the person is already on the ballot since redundantly adding them could throw away the current data
-    //otherwise, adds the person to the ballot by putting them in the hashmap with 0 votes.
-    //public void submitVote(String first, String second, String third) throws CandidateNotNominatedException, MoreThanOnceException
-    //throws a CandidateNotNominatedException  if any of the choices are not on the ballot
-    //throws a MoreThanOnceException if any of the choices are duplicates
-    //otherwise increases the candidates votes, respectively
-    //public Optional<String> calculateWinner()
-    //produces the name of the Optional.of(candidate) if a clear winner was chosen; produces Optional.empty() if there is no clear winner based on the current strategy.
-    //[Encapsulation] makes a deep copy of the HashMap to pass to the strategy
-    //calls the strategy's calculateWinner(...) method and returns whatever the strategy returns.
+    private HashMap<String, Votes> candidatesData;
+    private I3VoteStrategy strategy;
 
-    public ElectionData(I3VoteStrategy strategy){}
-    public void setStrategy(I3VoteStrategy strategy){}
-    public Set<String> getCandidates(){
+    public ElectionData(I3VoteStrategy strategy) {
+        this.candidatesData = new HashMap<>();
+        this.strategy = strategy;
+    }
 
-        return candidatesData.keySet(); }
-    public void nominateCandidate(String person) throws AlreadyNominatedException{}
-    public void submitVote(String first, String second, String third) throws CandidateNotNominatedException, MoreThanOnceException{}
-    public Optional<String> calculateWinner(){return Optional.empty();}
+    public void setStrategy(I3VoteStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public Set<String> getCandidates() {
+        return new HashSet<>(candidatesData.keySet());
+    }
+    public void nominateCandidate(String candidate) throws AlreadyNominatedException {
+        if (candidatesData.containsKey(candidate)) {
+            throw new AlreadyNominatedException(candidate);
+        }
+        // Initialize the Votes object with zero votes in all categories
+        candidatesData.put(candidate, new Votes(0, 0, 0));
+    }
+
+
+    public void submitVote(String first, String second, String third) throws CandidateNotNominatedException, MoreThanOnceException {
+        if (first.equals(second) || first.equals(third) || second.equals(third)) {
+            throw new MoreThanOnceException(first.equals(second) ? first : third);
+        }
+
+        if (!candidatesData.containsKey(first) || !candidatesData.containsKey(second) || !candidatesData.containsKey(third)) {
+            String notNominated = !candidatesData.containsKey(first) ? first : (!candidatesData.containsKey(second) ? second : third);
+            throw new CandidateNotNominatedException(notNominated);
+        }
+
+        candidatesData.get(first).voteFirst();
+        candidatesData.get(second).voteSecond();
+        candidatesData.get(third).voteThird();
+    }
+
+    public Optional<String> calculateWinner() {
+        HashMap<String, Votes> candidatesCopy = new HashMap<>();
+        for (String candidate : candidatesData.keySet()) {
+            candidatesCopy.put(candidate, new Votes(candidatesData.get(candidate)));
+        }
+
+        return strategy.calculateWinner(candidatesCopy);
+    }
 }

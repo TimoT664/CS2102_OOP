@@ -14,6 +14,11 @@ public class Votes {
         this.secondVotes = v.secondVotes;
         this.thirdVotes = v.thirdVotes;
     }
+
+    public Votes() {
+
+    }
+
     public int getFirstVotes(){
         return this.firstVotes;
     }
@@ -31,5 +36,14 @@ public class Votes {
     }
     public void voteThird(){
         this.thirdVotes++;
+    }
+
+    public void incrementFirstVotes() {
+    }
+
+    public void incrementSecondVotes() {
+    }
+
+    public void incrementThirdVotes() {
     }
 }
