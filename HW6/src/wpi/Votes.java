@@ -4,19 +4,19 @@ public class Votes {
     private int firstVotes;
     private int secondVotes;
     private int thirdVotes;
-    public Votes(int first, int second, int third){
-        this.firstVotes = first;
-        this.secondVotes = second;
-        this.thirdVotes = third;
-    }
+
+    /*public Votes() {
+
+    }*/
     public Votes(Votes v){
         this.firstVotes = v.firstVotes;
         this.secondVotes = v.secondVotes;
         this.thirdVotes = v.thirdVotes;
     }
-
-    public Votes() {
-
+    public Votes(int first, int second, int third){
+        this.firstVotes = first;
+        this.secondVotes = second;
+        this.thirdVotes = third;
     }
 
     public int getFirstVotes(){
@@ -37,7 +37,7 @@ public class Votes {
     public void voteThird(){
         this.thirdVotes++;
     }
-
+/*
     public void incrementFirstVotes() {
     }
 
@@ -45,5 +45,5 @@ public class Votes {
     }
 
     public void incrementThirdVotes() {
-    }
+    }*/
 }
