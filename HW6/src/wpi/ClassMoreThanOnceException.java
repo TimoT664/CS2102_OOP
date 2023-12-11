@@ -1,5 +1,4 @@
-/*package wpi;
+package wpi;
 
 public class ClassMoreThanOnceException extends Exception{
 }
-*/
